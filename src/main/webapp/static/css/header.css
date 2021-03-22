@@ -1,0 +1,41 @@
+.header {
+    background-color: indianred;
+    padding-left: 40px;
+}
+
+#cart {
+    float: right;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    font-size: 20px;
+    border-radius: 50px;
+    background-color: indianred;
+    margin-right: 80px;
+}
+
+.navbar {
+    font-size: 16px;
+    font-weight: bold;
+    color: darkblue;
+}
+
+.navbar li{
+    display: inline;
+    margin-right: 20px;
+    list-style: none;
+}
+
+.footer {
+    font-size: 14px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    padding: 3px;
+    text-align: center;
+    font-weight: bold;
+    color: black;
+    background: indianred;
+    box-shadow: 0 0 2px rgba(0, 0, 0, .2);
+}
