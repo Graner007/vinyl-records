@@ -3,10 +3,10 @@ package com.codecool.shop.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Supplier extends BaseModel {
+public class Artist extends BaseModel {
     private List<Product> products;
 
-    public Supplier(String name, String description) {
+    public Artist(String name, String description) {
         super(name);
         this.products = new ArrayList<>();
     }
