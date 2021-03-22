@@ -8,8 +8,8 @@
 .header {
     background-color: indianred;
     padding-left: 40px;
-    height: 140px;
-    box-shadow: 10px 0 5px -2px rgb(78, 78, 78);
+    height: 145px;
+    box-shadow: 5px 5px 5px 1px rgb(126, 30, 30);
 }
 
 img {
@@ -39,7 +39,7 @@ img {
 }
 
 #cart:hover {
-    background-color: #862733;
+    background-color: #a7694a;
     border-radius: 45px;
 }
 
