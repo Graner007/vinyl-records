@@ -38,8 +38,13 @@
 
 <div th:replace="sidebar.html :: copy"></div>
 
+<p class="container">
+    <div class="card">
+        <strong th:text="${category.name}">Category Title</strong>
+    </div>
 <br>
 <div class="container">
+
     <div id="products" class="row">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
             <div class="card">
@@ -63,6 +68,9 @@
 </div>
 <br><br><br><br>
 <div th:replace="footer.html :: copy"></div>
+
+<script src="/static/js/addToCart.js"></script>
+</script>
 
 </body>
 </html>

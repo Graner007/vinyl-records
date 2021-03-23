@@ -1,13 +1,16 @@
 package com.codecool.shop.config;
 
 import com.codecool.shop.dao.GenreDao;
+import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ArtistDao;
 import com.codecool.shop.dao.implementation.GenreDaoMem;
+import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.ArtistDaoMem;
 import com.codecool.shop.model.Artist;
 import com.codecool.shop.model.Genre;
+import com.codecool.shop.model.Order;
 import com.codecool.shop.model.Product;
 
 import javax.servlet.ServletContextEvent;
@@ -20,9 +23,10 @@ public class Initializer implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ProductDao productDataStore = ProductDaoMem.getInstance();
-        GenreDao productCategoryDataStore = GenreDaoMem.getInstance();
-        ArtistDao supplierDataStore = ArtistDaoMem.getInstance();
-
+        GenreDao GenreDataStore = GenreDaoMem.getInstance();
+        ArtistDao artistDataStore = ArtistDaoMem.getInstance();
+        OrderDao orderDataStore = OrderDaoMem.getInstance();
+      
         //setting up a new artist
         Artist eminem = new Artist("Eminem", "American rapper, songwriter, and record producer.");
         supplierDataStore.add(eminem);
@@ -40,7 +44,6 @@ public class Initializer implements ServletContextListener {
         supplierDataStore.add(tonyAllen);
         Artist nubiyanTwist = new Artist("Nubiyan Twist", "Nubiyan Twist are a twelve-piece outfit based in Leeds/London, UK.");
         supplierDataStore.add(nubiyanTwist);
-
 
         //setting up a new product category
         Genre hiphop = new Genre("HipHop", "HipHop", "HipHop Music by different artists.");
@@ -62,5 +65,7 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("Ariana Grande", 11.9f, "USD", "Positions", pop, arianaGrande));
         productDataStore.add(new Product("Tony Allen", 11.9f, "USD", "There Is No End", jazz, tonyAllen));
         productDataStore.add(new Product("Nubiyan Twist", 13.9f, "USD", "Freedom Fables", jazz, nubiyanTwist));
+      
+        orderDataStore.add(new Order());
     }
 }

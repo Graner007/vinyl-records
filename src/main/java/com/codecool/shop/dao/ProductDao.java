@@ -10,6 +10,7 @@ public interface ProductDao {
 
     void add(Product product);
     Product find(int id);
+    Product findByName(String name);
     void remove(int id);
 
     List<Product> getAll();
