@@ -34,6 +34,11 @@ public class ArtistDaoMem implements ArtistDao {
     }
 
     @Override
+    public Artist findByName(String name) {
+        return data.stream().filter(t -> t.getName().equals(name)).findFirst().orElse(null);
+    }
+
+    @Override
     public void remove(int id) {
         data.remove(find(id));
     }

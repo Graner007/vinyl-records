@@ -82,5 +82,22 @@ public class ProductController extends HttpServlet {
                     break;
             }
         }
+        else if (data.get("filter") != null) {
+            String filter = data.get("filter").getAsString();
+            List<Product> filterdProducts = new ArrayList<>();
+
+            products.forEach(product-> {
+                if (product.getProductCategory().getName().equals(filter)) {
+                    filterdProducts.add(product);
+                }
+                if (product.getSupplier().getName().equals(filter)) {
+                    filterdProducts.add(product);
+                }
+            });
+
+            System.out.println(filterdProducts.toString());
+
+            resp.getWriter().write(new Gson().toJson(filterdProducts));
+        }
     }
 }

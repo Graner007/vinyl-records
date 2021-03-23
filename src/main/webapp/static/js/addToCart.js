@@ -1,6 +1,5 @@
 const buttons = document.querySelectorAll(".card-text");
 let productsNumber = document.querySelector("#products-number");
-let body = document.getElementsByTagName("body")[0];
 const shoppingCart = document.querySelector("#cart");
 
 shoppingCart.addEventListener("click", () => {
@@ -19,12 +18,10 @@ for (let button of buttons) {
             body: JSON.stringify(data)
         })
             .then(response => response.json())
-            .then(data => {
-                productsNumber.innerHTML = data;
-                body.scrollTop = body.scrollHeight;
+            .then(async data => {
+                productsNumber.innerHTML = await data;
             })
             .catch((error) => {console.error("Error: " + error);
             });
     });
-
 }
