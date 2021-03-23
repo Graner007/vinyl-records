@@ -27,11 +27,14 @@ public class Order {
     }
 
     public void addProduct(LineItem lineItem) {
-        if (products.contains(lineItem)) {
-            LineItem item = products.get(products.indexOf(lineItem));
-            item.setQuantity(item.getQuantity()+1);
+        boolean find = false;
+        for (LineItem item : products) {
+            if (item.getName().equals(lineItem.getName())) {
+                item.setQuantity(item.getQuantity() + 1);
+                find = true;
+            }
         }
-        else {
+        if (!find) {
             products.add(lineItem);
         }
     }
