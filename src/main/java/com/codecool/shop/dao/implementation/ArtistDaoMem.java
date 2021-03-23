@@ -13,8 +13,7 @@ public class ArtistDaoMem implements ArtistDao {
 
     /* A private Constructor prevents any other class from instantiating.
      */
-    private ArtistDaoMem() {
-    }
+    private ArtistDaoMem() {}
 
     public static ArtistDaoMem getInstance() {
         if (instance == null) {

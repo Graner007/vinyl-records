@@ -49,6 +49,9 @@ public class ProductDaoMem implements ProductDao {
     }
 
     @Override
+    public Product findByName(String name) { return data.stream().filter(t -> t.getName() == name).findFirst().orElse(null); }
+
+    @Override
     public List<Product> getBy(Artist artist) {
         return data.stream().filter(t -> t.getSupplier().equals(artist)).collect(Collectors.toList());
     }
