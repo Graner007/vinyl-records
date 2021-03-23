@@ -1,6 +1,7 @@
 const genres = document.querySelector('#genres');
 const artists = document.querySelector('#artists');
 let sidebarContent = document.querySelector('#sidebarContent');
+const filters = document.querySelectorAll(".filters");
 
 const sendData = (text) => {
     fetch('/', {
@@ -13,8 +14,8 @@ const sendData = (text) => {
             sidebarContent.textContent = "";
             for (let d of data) {
                 let li = document.createElement("li");
+                li.classList.add("filters");
                 li.innerHTML = d;
-                console.log(li);
                 sidebarContent.appendChild(li);
             }
         })
@@ -29,3 +30,19 @@ genres.addEventListener("click", () => {
 artists.addEventListener("click", () => {
    sendData("artist");
 });
+
+for (let filter of filters) {
+    filter.addEventListener("click", () => {
+        fetch('/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ filter: filter.innerHTML })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch((error) => {console.error("Error: " + error);
+            });
+    });
+}
