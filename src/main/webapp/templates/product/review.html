@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="head.html :: copy"></div>
+<body>
+
+<div th:replace="navbar.html :: copy"></div>
+
+<div th:replace="sidebar.html :: copy"></div>
+
+<div class="container">
+    <div th:each="c, iterStat : ${cart}">
+        <p th:text="${c.name}">name</p>
+        <p th:text="${c.getPrice()}">price</p>
+        <input type="number" th:value="${c.getQuantity()}">
+    </div>
+</div>
+<br><br><br><br>
+<div th:replace="footer.html :: copy"></div>
+
+<script src="/static/js/addToCart.js"></script>
+</script>
+
+</body>
+</html>

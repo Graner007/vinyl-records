@@ -1,37 +1,38 @@
 package com.codecool.shop.model;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
 
     private int id;
-    private Map<LineItem, Integer> products;
+    private List<LineItem> products;
 
     public Order() {
-        products = new HashMap<>();
+        products = new ArrayList<>();
     }
 
-    public Map<LineItem, Integer> getProducts() { return products; }
+    public List<LineItem> getProducts() { return products; }
 
     public int getId() { return id; }
 
     public void setId(int id) { this.id = id; }
 
     public int getProductNumbers() {
-        if (!products.values().equals(null)) {
-            return products.values().stream().collect(Collectors.summingInt(Integer::intValue));
+        int counter = 0;
+        for (LineItem item : products) {
+            counter += item.getQuantity();
         }
-        return 0;
+        return counter;
     }
 
     public void addProduct(LineItem lineItem) {
-        if (products.containsKey(lineItem)) {
-            products.put(lineItem, products.get(lineItem) + 1);
+        if (products.contains(lineItem)) {
+            LineItem item = products.get(products.indexOf(lineItem));
+            item.setQuantity(item.getQuantity()+1);
         }
         else {
-            products.put(lineItem, 1);
+            products.add(lineItem);
         }
     }
 }
