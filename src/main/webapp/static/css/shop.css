@@ -1,0 +1,28 @@
+input {
+    width: 50px;
+    border-radius: 20px;
+    background-color: #96efff;
+}
+
+.bg-primary {
+    color: white;
+    background: #3b86bf;
+}
+
+tr td .fas {
+    color: #0b415d;
+}
+
+#checkout-button {
+    float: right;
+    padding: 10px;
+    background-color: #3b86bf;
+    border-radius: 20px;
+    font-weight: bold;
+    color: white;
+    transition-duration: 0.4s;
+}
+
+#checkout-button:hover {
+    background-color: #0b415d;
+}

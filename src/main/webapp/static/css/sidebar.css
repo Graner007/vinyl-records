@@ -2,11 +2,11 @@
     position: absolute;
     top: 165px;
     padding-top: 5px;
-    background-color: indianred;
+    background-color: #3b86bf;
     width: 180px;
     margin-left: 10px;
     border-radius: 20px;
-    box-shadow: 5px 5px 5px 1px rgb(126, 30, 30);
+    box-shadow: 5px 5px 5px 1px rgb(127, 206, 219);
 }
 
 .sidebar li {

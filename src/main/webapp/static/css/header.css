@@ -6,10 +6,10 @@
 }
 
 .header {
-    background-color: indianred;
+    background-color: #3b86bf;
     padding-left: 40px;
     height: 145px;
-    box-shadow: 5px 5px 5px 1px rgb(126, 30, 30);
+    box-shadow: 5px 5px 5px 1px rgb(44, 30, 126);
 }
 
 img {
@@ -30,8 +30,8 @@ img {
     position: absolute;
     top: 30px;
     right: 120px;
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     border-radius: 50px;
     margin-right: 80px;
     background-color: #262626;
@@ -39,8 +39,7 @@ img {
 }
 
 #cart:hover {
-    background-color: #a7694a;
-    border-radius: 45px;
+    background-color: #0b415d;
 }
 
 .fas {
@@ -66,7 +65,7 @@ img {
     font-family: 'Lato', sans-serif;
     font-size: 23px;
     color: #c1c1c1;
-    background-color: indianred;
+    background-color: #3b86bf;
     border: none;
     transition-duration: 0.4s;
 }
@@ -75,6 +74,19 @@ img {
     color: #262626;
     font-weight: bold;
     font-size: 25px;
+}
+
+.products-number {
+    position: absolute;
+    top: 78px;
+    right: 210px;
+    z-index: 1;
+}
+
+#products-number {
+    font-family: 'Anton', sans-serif;
+    font-size: 20px;
+    color: #69e9e3;
 }
 
 .footer {
@@ -87,6 +99,6 @@ img {
     text-align: center;
     font-family: 'Lato', sans-serif;
     color: black;
-    background: indianred;
+    background: #3b86bf;
     box-shadow: 0 0 2px rgba(0, 0, 0, .2);
 }

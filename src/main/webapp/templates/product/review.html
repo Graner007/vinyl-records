@@ -1,24 +1,90 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="head.html :: copy"></div>
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="BM Records" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="icon" href="/static/img/vinyl.png">
+
+    <title>BM Records</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/header.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/shop.css" />
+</head>
+
 <body>
 
-<div th:replace="navbar.html :: copy"></div>
-
-<div th:replace="sidebar.html :: copy"></div>
-
+<div th:replace="header-shop.html :: copy"></div>
+<br>
 <div class="container">
-    <div th:each="c, iterStat : ${cart}">
-        <p th:text="${c.name}">name</p>
-        <p th:text="${c.getPrice()}">price</p>
-        <input type="number" th:value="${c.getQuantity()}">
-    </div>
+    <h1>MY SHOPPING CART</h1>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Your Item</th>
+            <th scope="col"></th>
+            <th scope="col">Unit price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="c, iterStat : ${cart}">
+            <td><img src="/static/img/product_7.png" alt="pic" width="150" height="150"></td>
+            <td th:text="${c.name}">item name</td>
+            <td th:text="${c.getPrice()} + ' $'">unit price</td>
+            <td><input type="number" th:value="${c.getQuantity()}"></td>
+            <td>total price</td>
+            <td><i class="fas fa-trash-alt"></i></td>
+        </tr>
+        <tr class="bg-primary">
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col">GRAND TOTAL:</th>
+            <th scope="col">1000 $</th>
+            <th scope="col"></th>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <button id="checkout-button">Proceed to Checkout <i class="fas fa-credit-card"></i></button>
+
 </div>
+
+
+<br><br>
+
+<br><br>
+<div th:replace="footer.html :: copy"></div>
+
+
 <br><br><br><br>
 <div th:replace="footer.html :: copy"></div>
 
 <script src="/static/js/addToCart.js"></script>
-</script>
 
 </body>
 </html>
