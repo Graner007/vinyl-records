@@ -29,31 +29,31 @@ public class Initializer implements ServletContextListener {
       
         //setting up a new artist
         Artist eminem = new Artist("Eminem", "American rapper, songwriter, and record producer.");
-        supplierDataStore.add(eminem);
+        artistDataStore.add(eminem);
         Artist iceT = new Artist("Ice T", "American rapper, actor, songwriter, and producer.");
-        supplierDataStore.add(iceT);
+        artistDataStore.add(iceT);
         Artist ozzyOsborne = new Artist("Ozzy Osborne", "English singer, songwriter, and television personality.");
-        supplierDataStore.add(ozzyOsborne);
+        artistDataStore.add(ozzyOsborne);
         Artist burningWitches = new Artist("Burning Witches", "Swiss/Dutch Heavy Metal band.");
-        supplierDataStore.add(burningWitches);
+        artistDataStore.add(burningWitches);
         Artist duaLipa = new Artist("Dua Lipa", "English singer and song writer.");
-        supplierDataStore.add(duaLipa);
+        artistDataStore.add(duaLipa);
         Artist arianaGrande = new Artist("Ariana Grande", "American singer and actress.");
-        supplierDataStore.add(arianaGrande);
+        artistDataStore.add(arianaGrande);
         Artist tonyAllen = new Artist("Tony Allen", "Nigerian drummer, composer, and songwriter.");
-        supplierDataStore.add(tonyAllen);
+        artistDataStore.add(tonyAllen);
         Artist nubiyanTwist = new Artist("Nubiyan Twist", "Nubiyan Twist are a twelve-piece outfit based in Leeds/London, UK.");
-        supplierDataStore.add(nubiyanTwist);
+        artistDataStore.add(nubiyanTwist);
 
         //setting up a new product category
         Genre hiphop = new Genre("HipHop", "HipHop", "HipHop Music by different artists.");
-        productCategoryDataStore.add(hiphop);
+        GenreDataStore.add(hiphop);
         Genre metal = new Genre("Metal", "Metal", "Metal music by different artists.");
-        productCategoryDataStore.add(metal);
+        GenreDataStore.add(metal);
         Genre pop = new Genre("Pop", "Pop", "Pop music by different artists.");
-        productCategoryDataStore.add(pop);
+        GenreDataStore.add(pop);
         Genre jazz = new Genre("Jazz", "Jazz", "Jazz music by different artists.");
-        productCategoryDataStore.add(jazz);
+        GenreDataStore.add(jazz);
 
         //setting up products and printing it
         productDataStore.add(new Product("Eminem", 9.9f, "USD", "Kamikaze", hiphop, eminem));
