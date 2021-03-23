@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(urlPatterns = {"/"})
@@ -34,7 +35,6 @@ public class ProductController extends HttpServlet {
     private OrderDao orderDataStore = OrderDaoMem.getInstance();
     private ArtistDao artistDataStore = ArtistDaoMem.getInstance();
 
-    private Genre genre = productCategoryDataStore.find(1);
     private List<Product> products = productDataStore.getAll();
     private List<Artist> artists = artistDataStore.getAll();
     private List<Genre> genres = productCategoryDataStore.getAll();
@@ -43,12 +43,9 @@ public class ProductController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-
-        //int productsNumber = orderDataStore.find(1).getProductNumbers();
       
-        context.setVariable("category", genre);
+        context.setVariable("genres", genres);
         context.setVariable("products", products);
-        //context.setVariable("productsNumber", productsNumber);
 
         engine.process("product/index.html", context, resp.getWriter());
     }
@@ -60,7 +57,7 @@ public class ProductController extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
-        if (data.get("name").getAsString().length() != 0 && data.get("price").getAsString().length() != 0) {
+        if (data.get("name") != null && data.get("price") != null) {
             String recordName = data.get("name").getAsString();
             float recordPrice = Float.parseFloat(data.get("price").getAsString().split(" ")[0]);
 
@@ -70,15 +67,18 @@ public class ProductController extends HttpServlet {
 
             resp.getWriter().write(new Gson().toJson(orderDataStore.find(1).getProductNumbers()));
         }
-        else if (data.get("text").getAsString().length() != 0) {
+        else if (data.get("text") != null) {
             String text = data.get("text").getAsString();
+            List<String> names = new ArrayList<>();
 
             switch (text) {
                 case "genre":
-                    resp.getWriter().write(new Gson().toJson(genres));
+                    genres.forEach(genre -> names.add(genre.getName()));
+                    resp.getWriter().write(new Gson().toJson(names));
                     break;
                 case "artist":
-                    resp.getWriter().write(new Gson().toJson(artists));
+                    artists.forEach(artist -> names.add(artist.getName()));
+                    resp.getWriter().write(new Gson().toJson(names));
                     break;
             }
         }

@@ -36,16 +36,12 @@
 
 <div th:replace="header.html :: copy"></div>
 
-<div th:replace="sidebar.html :: copy"></div>
+<div class="sidebar">
+    <ul id="sidebarContent">
+        <li th:each="genre : ${genres}" th:text="${genre.getName()}"></li>
+    </ul>
+</div>
 
-<p class="container">
-
-
-
-
-
-
-    <br>
 <div class="container">
 
     <div id="products" class="row">

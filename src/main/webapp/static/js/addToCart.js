@@ -1,7 +1,7 @@
 const buttons = document.querySelectorAll(".card-text");
 let productsNumber = document.querySelector("#products-number");
 let body = document.getElementsByTagName("body")[0];
-const shoppingCart = document.querySelector(".fa-shopping-cart");
+const shoppingCart = document.querySelector("#cart");
 
 shoppingCart.addEventListener("click", () => {
     window.location.href = '/shopping-cart';
