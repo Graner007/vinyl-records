@@ -58,7 +58,7 @@
                         <p class="lead" th:text="${prod.getPrice()}">Price</p>
                     </div>
                     <div class="card-text toCenter">
-                        <button class="btn btn-outline-primary">Add to cart</button>
+                        <button class="btn btn-outline-primary" th:id="${prod.name}">Add to cart</button>
                     </div>
                 </div>
             </div>
