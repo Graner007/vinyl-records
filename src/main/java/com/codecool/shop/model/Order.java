@@ -7,6 +7,7 @@ public class Order {
 
     private int id;
     private List<LineItem> products;
+    private User user;
 
     public Order() {
         products = new ArrayList<>();
@@ -24,6 +25,14 @@ public class Order {
             counter += item.getQuantity();
         }
         return counter;
+    }
+
+    public void addUser(User user) {
+        user = user;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public float getGrandTotalPrice() {

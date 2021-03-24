@@ -12,6 +12,7 @@ import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.Genre;
 import com.codecool.shop.model.LineItem;
 import com.codecool.shop.model.Order;
+import com.codecool.shop.model.Payment;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.thymeleaf.TemplateEngine;
@@ -29,22 +30,12 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/payment"})
 public class PaymentController extends HttpServlet {
 
-    private ProductDao productDataStore = ProductDaoMem.getInstance();
-    private GenreDao productCategoryDataStore = GenreDaoMem.getInstance();
     private OrderDao orderDataStore = OrderDaoMem.getInstance();
-    LineItemDao lineItemDataStore = LineItemDaoMem.getInstance();
-
-    private Genre category = productCategoryDataStore.find(1);
-    private float grandTotal = orderDataStore.find(1).getGrandTotalPrice();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-
-        context.setVariable("category", category);
-        context.setVariable("cart", orderDataStore.find(1).getProducts());
-        context.setVariable("grandTotal", grandTotal);
 
         engine.process("product/payment.html", context, resp.getWriter());
     }
@@ -56,26 +47,17 @@ public class PaymentController extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
-        if (data.get("quantity") != null && data.get("name") != null) {
-            int quantity = data.get("quantity").getAsInt();
-            String name = data.get("name").getAsString();
-            List<Float> result = new ArrayList<>();
+        if (data.get("cardnumber") != null) {
+            String cardNumber = data.get("cardnumber").getAsString();
+            String cardCvc = data.get("cardcvc").getAsString();
+            String cardExpiry = data.get("cardexpiry").getAsString();
+            String cardHolderName = data.get("cardholdername").getAsString();
+            System.out.println(orderDataStore.);
 
-            LineItem lineItem = lineItemDataStore.findByName(name);
-            lineItem.setQuantity(quantity);
-
-            if (quantity == 0) {
-                lineItemDataStore.removeByObject(lineItem);
-                orderDataStore.removeLineItem(lineItem);
-            }
-
-            float newGrandTotal = orderDataStore.find(1).getGrandTotalPrice();
-            grandTotal = newGrandTotal;
-
-            result.add(lineItem.getSubTotalPrice());
-            result.add(newGrandTotal);
-
-            resp.getWriter().write(new Gson().toJson(result));
+            orderDataStore.find(1).getUser().addPayment(new Payment(cardNumber, cardExpiry, cardCvc, cardHolderName));
+            resp.getWriter().write(new Gson().toJson("success"));
         }
+
+        resp.getWriter().write(new Gson().toJson("failure"));
     }
 }

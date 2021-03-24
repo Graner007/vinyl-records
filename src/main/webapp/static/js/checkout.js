@@ -1,0 +1,1 @@
+const paymentButton = document.querySelector("#payment-button");
