@@ -60,8 +60,8 @@
                                     <div class="form-group"> <label for="cc-cvc" class="control-label">CARD CVC</label> <input id="cc-cvc" type="tel" class="input-lg form-control cc-cvc" autocomplete="off" placeholder="••••" required> </div>
                                 </div>
                             </div>
-                            <div class="form-group"> <label for="numeric" class="control-label">CARD HOLDER NAME</label> <input type="text" class="input-lg form-control"> </div>
-                            <div class="form-group"> <input value="PAY NOW" type="button" class="btn btn-success btn-lg form-control" style="font-size: .9rem;"> </div>
+                            <div class="form-group"> <label for="card-holder-name" class="control-label">CARD HOLDER NAME</label> <input type="text" class="input-lg form-control" id="card-holder-name"> </div>
+                            <button class="form-group" type="submit" id="pay-button"> <input value="PAY NOW" type="button" class="btn btn-success btn-lg form-control" style="font-size: .9rem;"> </button>
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
 <br><br><br><br>
 <div th:replace="footer.html :: copy"></div>
 
-<script src="/static/js/editCart.js"></script>
+<script src="/static/js/payment.js"></script>
 
 </body>
 </html>

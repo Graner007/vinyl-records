@@ -12,6 +12,7 @@ import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.Genre;
 import com.codecool.shop.model.LineItem;
 import com.codecool.shop.model.Order;
+import com.codecool.shop.model.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.thymeleaf.TemplateEngine;
@@ -24,58 +25,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 
 @WebServlet(urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
 
-    private ProductDao productDataStore = ProductDaoMem.getInstance();
-    private GenreDao productCategoryDataStore = GenreDaoMem.getInstance();
     private OrderDao orderDataStore = OrderDaoMem.getInstance();
-    LineItemDao lineItemDataStore = LineItemDaoMem.getInstance();
-
-    private Genre category = productCategoryDataStore.find(1);
-    private float grandTotal = orderDataStore.find(1).getGrandTotalPrice();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
+        List<String> dataNames = Arrays.asList("name", "email", "phone", "billingCompany", "billingAddress", "billingCity",
+                "billingState", "billingZip", "shippingAddress", "shippingCity", "shippingState", "shippingZip");
 
-        context.setVariable("category", category);
-        context.setVariable("cart", orderDataStore.find(1).getProducts());
-        context.setVariable("grandTotal", grandTotal);
-
-        engine.process("product/checkout.html", context, resp.getWriter());
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        JsonObject data = new Gson().fromJson(req.getReader(), JsonObject.class);
-
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
-
-        if (data.get("quantity") != null && data.get("name") != null) {
-            int quantity = data.get("quantity").getAsInt();
-            String name = data.get("name").getAsString();
-            List<Float> result = new ArrayList<>();
-
-            LineItem lineItem = lineItemDataStore.findByName(name);
-            lineItem.setQuantity(quantity);
-
-            if (quantity == 0) {
-                lineItemDataStore.removeByObject(lineItem);
-                orderDataStore.removeLineItem(lineItem);
+        if (req.getParameterMap().containsKey("name")) {
+            List<String> userDatas = new ArrayList<>();
+            for (int i = 0; i < dataNames.size(); i++) {
+                userDatas.add(req.getParameter(dataNames.get(i)));
             }
 
-            float newGrandTotal = orderDataStore.find(1).getGrandTotalPrice();
-            grandTotal = newGrandTotal;
-
-            result.add(lineItem.getSubTotalPrice());
-            result.add(newGrandTotal);
-
-            resp.getWriter().write(new Gson().toJson(result));
+            orderDataStore.find(1).addUser(new User(userDatas.get(0), userDatas.get(1), userDatas.get(2), userDatas.get(3), userDatas.get(4), userDatas.get(5), userDatas.get(6), Integer.parseInt(userDatas.get(7)), userDatas.get(8), userDatas.get(9),  userDatas.get(10), Integer.parseInt(userDatas.get(11))));
+            engine.process("product/payment.html", context, resp.getWriter());
+        }
+        else {
+            engine.process("product/checkout.html", context, resp.getWriter());
         }
     }
 }
