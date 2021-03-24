@@ -26,6 +26,14 @@ public class Order {
         return counter;
     }
 
+    public float getGrandTotalPrice() {
+        float counter = 0;
+        for (int i = 0; i < products.size(); i++) {
+            counter += products.get(i).getSubTotalPrice();
+        }
+        return counter;
+    }
+
     public void addProduct(LineItem lineItem) {
         boolean find = false;
         for (LineItem item : products) {

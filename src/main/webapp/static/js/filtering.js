@@ -68,6 +68,7 @@ addGlobalEventListener("click", "filters", e => {
 
                 let h4 = document.createElement("h4");
                 h4.classList.add("card-text");
+                h4.classList.add("album-names");
                 h4.innerHTML = data[i][3];
                 divCardHeader.appendChild(h4);
 

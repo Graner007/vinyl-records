@@ -51,12 +51,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="c, iterStat : ${cart}">
+        <tr class="items" th:each="c, iterStat : ${cart}">
             <td><img th:attr="src='/static/img/product_' + ${c.name} + '.png'" alt="pic" width="150" height="150"></td>
-            <td th:text="${c.name}">item name</td>
+            <td class="album-name" th:text="${c.name}">item name</td>
             <td th:text="${c.getPrice()} + ' $'">unit price</td>
-            <td><input type="number" th:value="${c.getQuantity()}"></td>
-            <td>total price</td>
+            <td><input type="number" min="0" class="quantity" th:value="${c.getQuantity()}"></td>
+            <td th:text="${c.getSubTotalPrice()}" class="sub-total-price">total price</td>
             <td><i class="fas fa-trash-alt"></i></td>
         </tr>
         <tr class="bg-primary">
@@ -64,7 +64,7 @@
             <th scope="col"></th>
             <th scope="col"></th>
             <th scope="col">GRAND TOTAL:</th>
-            <th scope="col">1000 $</th>
+            <th scope="col" id="grand-total" th:text="${grandTotal} + ' $'"></th>
             <th scope="col"></th>
         </tr>
         </tbody>
@@ -83,6 +83,8 @@
 
 <br><br><br><br>
 <div th:replace="footer.html :: copy"></div>
+
+<script src="/static/js/editCart.js"></script>
 
 </body>
 </html>

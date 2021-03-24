@@ -1,6 +1,7 @@
 package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.OrderDao;
+import com.codecool.shop.model.LineItem;
 import com.codecool.shop.model.Order;
 
 import java.util.ArrayList;
@@ -28,6 +29,15 @@ public class OrderDaoMem implements OrderDao {
 
     @Override
     public void remove(int id) { data.remove(id); }
+
+    @Override
+    public void removeLineItem(LineItem lineItem) {
+        for (Order order : data) {
+            if (order.getProducts().contains(lineItem)) {
+                order.getProducts().remove(order.getProducts().indexOf(lineItem));
+            }
+        }
+    }
 
     @Override
     public Order find(int id) { return data.stream().filter(order -> order.getId() == id).findFirst().orElse(null); }

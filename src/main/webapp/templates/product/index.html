@@ -49,7 +49,7 @@
             <div class="card">
                 <img th:attr="src='/static/img/product_' + ${prod.description} + '.png'" alt="" />
                 <div class="card-header colorize">
-                    <h4 class="card-text" th:text="${prod.description}">Album title</h4>
+                    <h4 class="card-text album-names" th:text="${prod.description}">Album title</h4>
                     <h6 class="card-title" th:text="${prod.name}">Artist</h6>
                     <p class="card-text" th:text="${prod.productCategory.genre}">Album genre</p>
                 </div>

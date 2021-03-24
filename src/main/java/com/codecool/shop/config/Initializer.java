@@ -1,13 +1,7 @@
 package com.codecool.shop.config;
 
-import com.codecool.shop.dao.GenreDao;
-import com.codecool.shop.dao.OrderDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.ArtistDao;
-import com.codecool.shop.dao.implementation.GenreDaoMem;
-import com.codecool.shop.dao.implementation.OrderDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.ArtistDaoMem;
+import com.codecool.shop.dao.*;
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.Artist;
 import com.codecool.shop.model.Genre;
 import com.codecool.shop.model.Order;
@@ -65,7 +59,7 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("Ariana Grande", 11.9f, "USD", "Positions", pop, arianaGrande));
         productDataStore.add(new Product("Tony Allen", 11.9f, "USD", "There Is No End", jazz, tonyAllen));
         productDataStore.add(new Product("Nubiyan Twist", 13.9f, "USD", "Freedom Fables", jazz, nubiyanTwist));
-      
+
         orderDataStore.add(new Order());
     }
 }
