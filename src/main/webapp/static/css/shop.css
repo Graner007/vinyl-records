@@ -13,7 +13,7 @@ tr td .fas {
     color: #0b415d;
 }
 
-#checkout-button {
+.shop-button {
     float: right;
     padding: 10px;
     background-color: #3b86bf;
