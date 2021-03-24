@@ -2,6 +2,7 @@ let productsNumber = document.querySelector("#products-number");
 const shoppingCart = document.querySelector("#cart");
 const names = document.querySelectorAll(".card-title");
 const prices = document.querySelectorAll(".lead");
+const albums = document.querySelectorAll(".album-names");
 
 shoppingCart.addEventListener("click", () => {
     window.location.href = '/shopping-cart';
@@ -19,7 +20,7 @@ addGlobalEventListener("click", "btn btn-outline-primary", e => {
 
     for (let i = 0; i < names.length; i++) {
         if (names[i].textContent == e.target.id) {
-            name = e.target.id;
+            name = albums[i].textContent;
             price = prices[i].textContent;
         }
     }
@@ -28,8 +29,6 @@ addGlobalEventListener("click", "btn btn-outline-primary", e => {
         name: name,
         price: price
     };
-
-    console.log(data);
 
     fetch('/', {
         method: 'POST',

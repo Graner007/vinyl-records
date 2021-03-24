@@ -1,18 +1,9 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.ArtistDao;
-import com.codecool.shop.dao.GenreDao;
-import com.codecool.shop.dao.OrderDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.implementation.ArtistDaoMem;
-import com.codecool.shop.dao.implementation.GenreDaoMem;
-import com.codecool.shop.dao.implementation.OrderDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.*;
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.model.Artist;
-import com.codecool.shop.model.Genre;
-import com.codecool.shop.model.LineItem;
-import com.codecool.shop.model.Product;
+import com.codecool.shop.model.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.thymeleaf.TemplateEngine;
@@ -34,6 +25,7 @@ public class ProductController extends HttpServlet {
     private GenreDao productCategoryDataStore = GenreDaoMem.getInstance();
     private OrderDao orderDataStore = OrderDaoMem.getInstance();
     private ArtistDao artistDataStore = ArtistDaoMem.getInstance();
+    private LineItemDao lineItemDataStore = LineItemDaoMem.getInstance();
 
     private List<Product> products = productDataStore.getAll();
     private List<Artist> artists = artistDataStore.getAll();
@@ -61,13 +53,13 @@ public class ProductController extends HttpServlet {
             String recordName = data.get("name").getAsString();
             float recordPrice = Float.parseFloat(data.get("price").getAsString().split(" ")[0]);
 
-            System.out.println(recordPrice);
-
             LineItem lineItem = new LineItem(recordName,1, recordPrice);
+            lineItemDataStore.add(lineItem);
 
-            orderDataStore.find(1).addProduct(lineItem);
+            Order order = orderDataStore.find(1);
+            order.addProduct(lineItem);
 
-            resp.getWriter().write(new Gson().toJson(orderDataStore.find(1).getProductNumbers()));
+            resp.getWriter().write(new Gson().toJson(order.getProductNumbers()));
         }
         else if (data.get("text") != null) {
             String text = data.get("text").getAsString();
@@ -87,6 +79,7 @@ public class ProductController extends HttpServlet {
         else if (data.get("filter") != null) {
             String filter = data.get("filter").getAsString();
             List<List<String>> filterdProducts = new ArrayList<>();
+            List<Product> newProducts = new ArrayList<>();
 
             products.forEach(product-> {
                 List<String> productList = new ArrayList<>();
@@ -96,6 +89,7 @@ public class ProductController extends HttpServlet {
                     productList.add(product.getPrice());
                     productList.add(product.getDescription());
                     filterdProducts.add(productList);
+                    newProducts.add(product);
                 }
                 if (product.getSupplier().getName().equals(filter)) {
                     productList.add(product.getName());
@@ -103,8 +97,11 @@ public class ProductController extends HttpServlet {
                     productList.add(product.getPrice());
                     productList.add(product.getDescription());
                     filterdProducts.add(productList);
+                    newProducts.add(product);
                 }
             });
+
+            products = newProducts;
 
             resp.getWriter().write(new Gson().toJson(filterdProducts));
         }

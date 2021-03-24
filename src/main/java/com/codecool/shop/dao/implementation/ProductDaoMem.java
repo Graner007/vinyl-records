@@ -17,8 +17,7 @@ public class ProductDaoMem implements ProductDao {
 
     /* A private Constructor prevents any other class from instantiating.
      */
-    private ProductDaoMem() {
-    }
+    private ProductDaoMem() {}
 
     public static ProductDaoMem getInstance() {
         if (instance == null) {
