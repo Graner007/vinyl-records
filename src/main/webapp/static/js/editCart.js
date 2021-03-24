@@ -3,6 +3,7 @@ const subTotalPrices = document.querySelectorAll(".sub-total-price");
 const albumNames = document.querySelectorAll(".album-name");
 const grandTotal = document.querySelector("#grand-total");
 const items = document.querySelectorAll(".items");
+const checkoutButton = document.querySelector("#checkout-button");
 let index;
 
 for (let i = 0; i < quantities.length; i++) {
@@ -34,3 +35,7 @@ for (let i = 0; i < quantities.length; i++) {
             .catch(error => console.log(error));
     });
 }
+
+checkoutButton.addEventListener("click", () => {
+    window.location.href = '/checkout';
+});
