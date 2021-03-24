@@ -84,18 +84,25 @@ public class ProductController extends HttpServlet {
         }
         else if (data.get("filter") != null) {
             String filter = data.get("filter").getAsString();
-            List<Product> filterdProducts = new ArrayList<>();
+            List<List<String>> filterdProducts = new ArrayList<>();
 
             products.forEach(product-> {
+                List<String> productList = new ArrayList<>();
                 if (product.getProductCategory().getName().equals(filter)) {
-                    filterdProducts.add(product);
+                    productList.add(product.getName());
+                    productList.add(product.getProductCategory().getName());
+                    productList.add(product.getPrice());
+                    productList.add(product.getDescription());
+                    filterdProducts.add(productList);
                 }
                 if (product.getSupplier().getName().equals(filter)) {
-                    filterdProducts.add(product);
+                    productList.add(product.getName());
+                    productList.add(product.getProductCategory().getName());
+                    productList.add(product.getPrice());
+                    productList.add(product.getSupplier().getName());
+                    filterdProducts.add(productList);
                 }
             });
-
-            System.out.println(filterdProducts.toString());
 
             resp.getWriter().write(new Gson().toJson(filterdProducts));
         }
