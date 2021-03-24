@@ -61,6 +61,8 @@ public class ProductController extends HttpServlet {
             String recordName = data.get("name").getAsString();
             float recordPrice = Float.parseFloat(data.get("price").getAsString().split(" ")[0]);
 
+            System.out.println(recordPrice);
+
             LineItem lineItem = new LineItem(recordName,1, recordPrice);
 
             orderDataStore.find(1).addProduct(lineItem);
@@ -99,7 +101,7 @@ public class ProductController extends HttpServlet {
                     productList.add(product.getName());
                     productList.add(product.getProductCategory().getName());
                     productList.add(product.getPrice());
-                    productList.add(product.getSupplier().getName());
+                    productList.add(product.getDescription());
                     filterdProducts.add(productList);
                 }
             });
