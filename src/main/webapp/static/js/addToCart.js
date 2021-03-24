@@ -14,6 +14,10 @@ function addGlobalEventListener(type, classname, callback) {
     });
 }
 
+if (sessionStorage.getItem("product-numbers")) {
+    productsNumber.innerHTML = sessionStorage.getItem("product-numbers");
+}
+
 addGlobalEventListener("click", "btn btn-outline-primary", e => {
     let name;
     let price;
@@ -38,6 +42,7 @@ addGlobalEventListener("click", "btn btn-outline-primary", e => {
         .then(response => response.json())
         .then(async data => {
             productsNumber.innerHTML = await data;
+            sessionStorage.setItem("product-numbers", await data);
         })
         .catch((error) => {console.error("Error: " + error);
         });

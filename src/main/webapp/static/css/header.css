@@ -5,6 +5,10 @@
     outline: 0 !important;
 }
 
+a {
+    text-decoration: none;
+}
+
 .header {
     background-color: #3b86bf;
     padding-left: 40px;
