@@ -41,13 +41,13 @@
         <li class="filters" th:each="genre : ${genres}" th:text="${genre.getName()}"></li>
     </ul>
 </div>
-
+<br>
 <div class="container">
 
     <div id="products" class="row">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
             <div class="card">
-                <img th:attr="src='/static/img/product_' + ${prod.id} + '.png'" alt="" />
+                <img th:attr="src='/static/img/product_' + ${prod.description} + '.png'" alt="" />
                 <div class="card-header colorize">
                     <h4 class="card-text" th:text="${prod.description}">Album title</h4>
                     <h6 class="card-title" th:text="${prod.name}">Artist</h6>

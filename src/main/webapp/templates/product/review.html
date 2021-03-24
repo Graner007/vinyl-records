@@ -52,7 +52,7 @@
         </thead>
         <tbody>
         <tr th:each="c, iterStat : ${cart}">
-            <td><img src="/static/img/product_7.png" alt="pic" width="150" height="150"></td>
+            <td><img th:attr="src='/static/img/product_' + ${c.name} + '.png'" alt="pic" width="150" height="150"></td>
             <td th:text="${c.name}">item name</td>
             <td th:text="${c.getPrice()} + ' $'">unit price</td>
             <td><input type="number" th:value="${c.getQuantity()}"></td>
