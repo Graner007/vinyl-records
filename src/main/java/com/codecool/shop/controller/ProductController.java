@@ -61,8 +61,8 @@ public class ProductController extends HttpServlet {
 
             resp.getWriter().write(new Gson().toJson(order.getProductNumbers()));
         }
-        else if (data.get("text") != null) {
-            String text = data.get("text").getAsString();
+        else if (data.get("toFilter") != null) {
+            String text = data.get("toFilter").getAsString();
             List<String> names = new ArrayList<>();
 
             switch (text) {
@@ -100,8 +100,6 @@ public class ProductController extends HttpServlet {
                     newProducts.add(product);
                 }
             });
-
-            products = newProducts;
 
             resp.getWriter().write(new Gson().toJson(filterdProducts));
         }

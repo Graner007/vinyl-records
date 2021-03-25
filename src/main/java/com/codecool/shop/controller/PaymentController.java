@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 @WebServlet(urlPatterns = {"/payment"})
@@ -37,27 +38,17 @@ public class PaymentController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        engine.process("product/payment.html", context, resp.getWriter());
-    }
+        if (req.getParameterMap().containsKey("card-holder-name")) {
+            String ccNumber = req.getParameter("cc-number");
+            String ccExp = req.getParameter("cc-exp");
+            String ccCvc = req.getParameter("cc-cvc");
+            String cardHolderName = req.getParameter("card-holder-name");
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        JsonObject data = new Gson().fromJson(req.getReader(), JsonObject.class);
-
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
-
-        if (data.get("cardnumber") != null) {
-            String cardNumber = data.get("cardnumber").getAsString();
-            String cardCvc = data.get("cardcvc").getAsString();
-            String cardExpiry = data.get("cardexpiry").getAsString();
-            String cardHolderName = data.get("cardholdername").getAsString();
-            System.out.println(orderDataStore.);
-
-            orderDataStore.find(1).getUser().addPayment(new Payment(cardNumber, cardExpiry, cardCvc, cardHolderName));
-            resp.getWriter().write(new Gson().toJson("success"));
+            Payment payment = new Payment(ccNumber, ccExp, ccCvc, cardHolderName);
+            orderDataStore.find(1).getUser().setPayment(payment);
+            resp.sendRedirect(req.getContextPath() + "/");
         }
 
-        resp.getWriter().write(new Gson().toJson("failure"));
+        engine.process("product/payment.html", context, resp.getWriter());
     }
 }

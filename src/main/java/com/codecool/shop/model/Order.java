@@ -27,12 +27,12 @@ public class Order {
         return counter;
     }
 
-    public void addUser(User user) {
-        user = user;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public User getUser() {
-        return user;
+        return this.user;
     }
 
     public float getGrandTotalPrice() {

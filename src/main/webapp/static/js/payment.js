@@ -1,5 +1,7 @@
 const payButton = document.querySelector('#pay-button');
+//window.location.href = "/payment";
 
+/*
 async function postData(url = '', data = {}) {
     const response = await fetch(url, {
         method: "POST",
@@ -27,4 +29,4 @@ payButton.addEventListener("click", () => {
        }
    })
        .catch(error => console.log(error));
-});
+});*/
