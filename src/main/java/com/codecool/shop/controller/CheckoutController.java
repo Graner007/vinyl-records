@@ -9,10 +9,7 @@ import com.codecool.shop.dao.implementation.GenreDaoMem;
 import com.codecool.shop.dao.implementation.LineItemDaoMem;
 import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.model.Genre;
-import com.codecool.shop.model.LineItem;
-import com.codecool.shop.model.Order;
-import com.codecool.shop.model.User;
+import com.codecool.shop.model.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.thymeleaf.TemplateEngine;
@@ -38,6 +35,7 @@ public class CheckoutController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
+
         List<String> dataNames = Arrays.asList("name", "email", "phone", "billingCompany", "billingAddress", "billingCity",
                 "billingState", "billingZip", "shippingAddress", "shippingCity", "shippingState", "shippingZip");
 
@@ -47,11 +45,10 @@ public class CheckoutController extends HttpServlet {
                 userDatas.add(req.getParameter(dataNames.get(i)));
             }
 
-            orderDataStore.find(1).addUser(new User(userDatas.get(0), userDatas.get(1), userDatas.get(2), userDatas.get(3), userDatas.get(4), userDatas.get(5), userDatas.get(6), Integer.parseInt(userDatas.get(7)), userDatas.get(8), userDatas.get(9),  userDatas.get(10), Integer.parseInt(userDatas.get(11))));
-            engine.process("product/payment.html", context, resp.getWriter());
+            orderDataStore.find(1).setUser(new User(userDatas.get(0), userDatas.get(1), userDatas.get(2), userDatas.get(3), userDatas.get(4), userDatas.get(5), userDatas.get(6), Integer.parseInt(userDatas.get(7)), userDatas.get(8), userDatas.get(9),  userDatas.get(10), Integer.parseInt(userDatas.get(11))));
+            resp.sendRedirect(req.getContextPath() + "/payment");
         }
-        else {
-            engine.process("product/checkout.html", context, resp.getWriter());
-        }
+
+        engine.process("product/checkout.html", context, resp.getWriter());
     }
 }

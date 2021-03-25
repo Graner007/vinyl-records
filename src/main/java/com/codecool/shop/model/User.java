@@ -31,25 +31,13 @@ public class User{
         this.shippingZip = shippingZip;
     }
 
-    public void addPayment(Payment payment) {
-        payment = payment;
-    }
+    public String getName() { return name; }
 
-    public String getName() {
-        return name;
-    }
+    public void setName(String name) { this.name = name; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public Payment getPayment() { return payment; }
 
-    public Payment getPayment() {
-        return payment;
-    }
-
-    public void setPayment(Payment payment) {
-        this.payment = payment;
-    }
+    public void setPayment(Payment payment) { this.payment = payment; }
 
     public String getEmail() {
         return email;
