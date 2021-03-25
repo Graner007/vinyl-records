@@ -46,7 +46,7 @@
     <table>
         <tr>
             <th>Order ID:</th>
-            <td>#64743</td>
+            <td>#0014</td>
         </tr>
         <tr>
             <th>Order date:</th>
@@ -54,15 +54,15 @@
         </tr>
         <tr>
             <th>Name:</th>
-            <td>name</td>
+            <td th:text="${userDetails.getName()}">name</td>
         </tr>
         <tr>
             <th>Shipping to:</th>
-            <td>shipping address</td>
+            <td th:text="${userDetails.getShippingAddress() + ', ' + userDetails.getShippingCity() + ', ' + userDetails.getShippingZip()}">shipping address</td>
         </tr>
         <tr>
             <th>Billing to:</th>
-            <td>billing address</td>
+            <td th:text="${userDetails.getCompanyName() + ', ' + userDetails.getBillingAddress() + ', ' + userDetails.getBillingCity() + ', ' + userDetails.getBillingZip()}">shipping address</td>
         </tr>
     </table>
 
@@ -71,29 +71,16 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th scope="col">Your Item</th>
+            <th scope="col">Ordered Item(s)</th>
             <th scope="col"></th>
-            <th scope="col">Unit price</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Total</th>
 
         </tr>
         </thead>
         <tbody>
-        <tr class="items" th:each="c, iterStat : ${cart}">
+        <tr class="items" th:each="c, iterStat : ${order}">
             <td><img th:attr="src='/static/img/product_' + ${c.name} + '.png'" alt="pic" width="150" height="150"></td>
             <td class="album-name" th:text="${c.name}">item name</td>
-            <td th:text="${c.getPrice()} + ' $'">unit price</td>
-            <td th:value="${c.getQuantity()}">Quantity</td>
-            <td th:text="${c.getSubTotalPrice()}" class="sub-total-price">total price</td>
 
-        </tr>
-        <tr class="bg-primary">
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col">GRAND TOTAL:</th>
-            <th scope="col" id="grand-total" th:text="${grandTotal} + ' $'"></th>
 
         </tr>
         </tbody>
