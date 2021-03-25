@@ -52,7 +52,6 @@ public class PaymentController extends HttpServlet {
             String cardCvc = data.get("cardcvc").getAsString();
             String cardExpiry = data.get("cardexpiry").getAsString();
             String cardHolderName = data.get("cardholdername").getAsString();
-            System.out.println(orderDataStore.);
 
             orderDataStore.find(1).getUser().addPayment(new Payment(cardNumber, cardExpiry, cardCvc, cardHolderName));
             resp.getWriter().write(new Gson().toJson("success"));

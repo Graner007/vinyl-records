@@ -36,9 +36,17 @@
 
 <div th:replace="header-shop.html :: copy"></div>
 <br>
-<div class="container">
-    <h1>MY SHOPPING CART</h1>
 
+<div class="container">
+    <h2>ORDER CONFIRMATION</h2>
+    <hr>
+    <h4>Thank you for your purchase.</h4>
+    <p>Order ID:</p>
+    <p>Order date:</p>
+    <p>Name:</p>
+    <p>Shipping to:</p>
+    <hr>
+    <h4>ORDER SUMMARY</h4>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -47,7 +55,7 @@
             <th scope="col">Unit price</th>
             <th scope="col">Quantity</th>
             <th scope="col">Total</th>
-            <th scope="col"></th>
+
         </tr>
         </thead>
         <tbody>
@@ -55,17 +63,9 @@
             <td><img th:attr="src='/static/img/product_' + ${c.name} + '.png'" alt="pic" width="150" height="150"></td>
             <td class="album-name" th:text="${c.name}">item name</td>
             <td th:text="${c.getPrice()} + ' $'">unit price</td>
-            <td><input type="number" min="0" class="quantity" th:value="${c.getQuantity()}"></td>
+            <td th:value="${c.getQuantity()}">Quantity</td>
             <td th:text="${c.getSubTotalPrice()}" class="sub-total-price">total price</td>
-            <td><i class="fas fa-trash-alt"></i></td>
-        </tr>
-        <tr class="bg-primary">
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col">SHIPPING:</th>
-            <th scope="col">FREE</th>
-            <th scope="col"></th>
+
         </tr>
         <tr class="bg-primary">
             <th scope="col"></th>
@@ -73,20 +73,17 @@
             <th scope="col"></th>
             <th scope="col">GRAND TOTAL:</th>
             <th scope="col" id="grand-total" th:text="${grandTotal} + ' $'"></th>
-            <th scope="col"></th>
+
         </tr>
         </tbody>
     </table>
+
+
+
+
     <br>
-    <button id="checkout-button" class="shop-button">Proceed to Checkout <i class="fas fa-credit-card"></i></button>
-
+    <p><b>Questions?</b> Call +36-1/123-4567</p>
 </div>
-
-
-<br><br>
-
-<br><br>
-<div th:replace="footer.html :: copy"></div>
 
 
 <br><br><br><br>
