@@ -46,7 +46,7 @@ public class PaymentController extends HttpServlet {
 
             Payment payment = new Payment(ccNumber, ccExp, ccCvc, cardHolderName);
             orderDataStore.find(1).getUser().setPayment(payment);
-            resp.sendRedirect(req.getContextPath() + "/");
+            resp.sendRedirect(req.getContextPath() + "/confirmation");
         }
 
         engine.process("product/payment.html", context, resp.getWriter());

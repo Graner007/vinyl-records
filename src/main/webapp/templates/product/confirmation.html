@@ -46,7 +46,7 @@
     <table>
         <tr th:each="user: ${userDetails}">
             <th>Order ID:</th>
-            <td>#0014</td>
+            <td th:text="${orderId}">orderId</td>
         </tr>
         <tr>
             <th>Order date:</th>
@@ -85,12 +85,10 @@
         </tr>
         </tbody>
     </table>
-
-
-
-
     <br>
-    <p><b>Questions?</b> Call +36-1/123-4567</p>
+    <p><b>Questions?</b> Call +36-1/123-4567</p><br>
+    <a href="/"><button type="button" class="shop-button">Back To Shopping</button></a>
+    <br><br>
 </div>
 
 

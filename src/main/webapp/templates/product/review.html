@@ -80,7 +80,7 @@
     <br>
     <button id="checkout-button" class="shop-button" th:if="${not #lists.isEmpty(cart)}">Proceed to Checkout <i class="fas fa-credit-card"></i></button>
     <div th:if="${#lists.isEmpty(cart)}">
-        <p>Not Yet</p>
+        <h3>No record selected</h3>
     </div>
 
 </div>
