@@ -26,7 +26,7 @@
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- End of Bootstrap components -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
     <link rel="stylesheet" type="text/css" href="/static/css/header.css" />
     <link rel="stylesheet" type="text/css" href="/static/css/shop.css" />
@@ -58,8 +58,66 @@
             </div>
         </div>
 
+        <hr>
+        <br>
+        <h3>SHIPPING ADDRESS</h3>
 
+        <div class="form-group">
+            <label for="shippingAddress">Address</label>
+            <input type="text" class="form-control" id="shippingAddress" name="shippingAddress" placeholder="1234 Main St" required>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="shippingCity">City</label>
+                <input type="text" class="form-control" id="shippingCity" name="shippingCity" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="shippingState">State</label>
+                <select id="shippingState" class="form-control" name="shippingState">
+                    <option selected>Pest megye</option>
+                    <option>Bacs-Kiskun megye</option>
+                    <option>Baranya megye</option>
+                    <option>Bekes megye</option>
+                    <option>Borsod-Abauj-Zemplen megye</option>
+                    <option>Csongrad-Csanad megye</option>
+                    <option>Fejer megye</option>
+                    <option>Gyor-Moson-Sopron megye</option>
+                    <option>Hajdu-Bihar megye</option>
+                    <option>Heves megye</option>
+                    <option>Jasz-Nagykun-Szolnok megye</option>
+                    <option>Komarom-Esztergom megye</option>
+                    <option>Nograd megye</option>
+                    <option>Somogy megye</option>
+                    <option>Szabolcs-Szatmar-Bereg megye</option>
+                    <option>Tolna megye</option>
+                    <option>Vas megye</option>
+                    <option>Veszprem megye</option>
+                    <option>Zala megye</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="shippingZip">Zip</label>
+                <input type="text" class="form-control" id="shippingZip" name="shippingZip" required>
+            </div>
+        </div>
+
+        <hr>
         <h3>BILLING ADDRESS</h3>
+
+        <div class="form-group">
+            <div class="form-check form-switch">
+                <table>
+                    <tr>
+                        <td><input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" />--</td>
+                        <td><label class="form-check-label" for="flexSwitchCheckDefault">My billing information is the same as shipping information.</label></td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+
+
         <div class="form-group">
             <label for="billingCompany">Company name</label>
             <input type="text" class="form-control" name="billingCompany" id="billingCompany" placeholder="Company name" required>
@@ -103,47 +161,6 @@
             </div>
         </div>
 
-        <br>
-        <h3>SHIPPING ADDRESS</h3>
-        <div class="form-group">
-            <label for="shippingAddress">Address</label>
-            <input type="text" class="form-control" id="shippingAddress" name="shippingAddress" placeholder="1234 Main St" required>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="shippingCity">City</label>
-                <input type="text" class="form-control" id="shippingCity" name="shippingCity" required>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="shippingState">State</label>
-                <select id="shippingState" class="form-control" name="shippingState">
-                    <option selected>Pest megye</option>
-                    <option>Bacs-Kiskun megye</option>
-                    <option>Baranya megye</option>
-                    <option>Bekes megye</option>
-                    <option>Borsod-Abauj-Zemplen megye</option>
-                    <option>Csongrad-Csanad megye</option>
-                    <option>Fejer megye</option>
-                    <option>Gyor-Moson-Sopron megye</option>
-                    <option>Hajdu-Bihar megye</option>
-                    <option>Heves megye</option>
-                    <option>Jasz-Nagykun-Szolnok megye</option>
-                    <option>Komarom-Esztergom megye</option>
-                    <option>Nograd megye</option>
-                    <option>Somogy megye</option>
-                    <option>Szabolcs-Szatmar-Bereg megye</option>
-                    <option>Tolna megye</option>
-                    <option>Vas megye</option>
-                    <option>Veszprem megye</option>
-                    <option>Zala megye</option>
-                </select>
-            </div>
-            <div class="form-group col-md-2">
-                <label for="shippingZip">Zip</label>
-                <input type="text" class="form-control" id="shippingZip" name="shippingZip" required>
-            </div>
-        </div>
 
         <br><br>
 

@@ -36,60 +36,62 @@
 
 <div th:replace="header-shop.html :: copy"></div>
 <br>
-<div class="container">
-    <h1>MY SHOPPING CART</h1>
 
-    <table class="table table-hover" th:if="${not #lists.isEmpty(cart)}">
+<div class="container">
+    <h2>ORDER CONFIRMATION</h2>
+    <h4>Thank you for your purchase.</h4>
+    <hr>
+    <h4>ORDER SUMMARY</h4>
+
+    <table>
+        <tr th:each="user: ${userDetails}">
+            <th>Order ID:</th>
+            <td>#0014</td>
+        </tr>
+        <tr>
+            <th>Order date:</th>
+            <td>2021.03.26.</td>
+        </tr>
+        <tr>
+            <th>Name:</th>
+            <td th:text="${userDetails.getName()}">name</td>
+        </tr>
+        <tr>
+            <th>Shipping to:</th>
+            <td th:text="${userDetails.getShippingAddress() + ', ' + userDetails.getShippingCity() + ', ' + userDetails.getShippingZip()}">shipping address</td>
+        </tr>
+        <tr>
+            <th>Billing to:</th>
+            <td th:text="${userDetails.getCompanyName() + ', ' + userDetails.getBillingAddress() + ', ' + userDetails.getBillingCity() + ', ' + userDetails.getBillingZip()}">shipping address</td>
+        </tr>
+    </table>
+
+    <br>
+
+    <table class="table table-hover">
         <thead>
         <tr>
-            <th scope="col">Your Item</th>
+            <th scope="col">Ordered Item(s)</th>
             <th scope="col"></th>
-            <th scope="col">Unit price</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Total</th>
-            <th scope="col"></th>
+
         </tr>
         </thead>
         <tbody>
-        <tr class="items" th:each="c, iterStat : ${cart}">
+        <tr class="items" th:each="c, iterStat : ${order}">
             <td><img th:attr="src='/static/img/product_' + ${c.name} + '.png'" alt="pic" width="150" height="150"></td>
             <td class="album-name" th:text="${c.name}">item name</td>
-            <td th:text="${c.getPrice()} + ' $'">unit price</td>
-            <td><input type="number" min="0" class="quantity" th:value="${c.getQuantity()}"></td>
-            <td th:text="${c.getSubTotalPrice()}" class="sub-total-price">total price</td>
-            <td><i class="fas fa-trash-alt"></i></td>
-        </tr>
-        <tr class="bg-primary">
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col">SHIPPING:</th>
-            <th scope="col">FREE</th>
-            <th scope="col"></th>
-        </tr>
-        <tr class="bg-primary">
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col">GRAND TOTAL:</th>
-            <th scope="col" id="grand-total" th:text="${grandTotal} + ' $'"></th>
-            <th scope="col"></th>
+
+
         </tr>
         </tbody>
     </table>
+
+
+
+
     <br>
-    <button id="checkout-button" class="shop-button" th:if="${not #lists.isEmpty(cart)}">Proceed to Checkout <i class="fas fa-credit-card"></i></button>
-    <div th:if="${#lists.isEmpty(cart)}">
-        <p>Not Yet</p>
-    </div>
-
+    <p><b>Questions?</b> Call +36-1/123-4567</p>
 </div>
-
-
-<br><br>
-
-<br><br>
-<div th:replace="footer.html :: copy"></div>
 
 
 <br><br><br><br>
