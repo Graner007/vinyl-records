@@ -30,6 +30,10 @@ img {
     font-size: 60px;
 }
 
+.logo a {
+    text-decoration: none !important;
+}
+
 #cart {
     position: absolute;
     top: 30px;
