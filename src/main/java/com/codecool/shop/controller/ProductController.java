@@ -61,8 +61,8 @@ public class ProductController extends HttpServlet {
 
             resp.getWriter().write(new Gson().toJson(order.getProductNumbers()));
         }
-        else if (data.get("toFilter") != null) {
-            String text = data.get("toFilter").getAsString();
+        else if (data.get("text") != null) {
+            String text = data.get("text").getAsString();
             List<String> names = new ArrayList<>();
 
             switch (text) {

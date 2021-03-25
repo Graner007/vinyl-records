@@ -28,6 +28,7 @@ for (let i = 0; i < deleteIcons.length; i++) {
                     sessionStorage.setItem("product-numbers", String(sessionStorage.getItem("product-numbers") - 1));
             })
             .catch(error => console.log(error));
+        //delete on server side
     });
 }
 
