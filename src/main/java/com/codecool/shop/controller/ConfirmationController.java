@@ -30,7 +30,9 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/confirmation"})
 public class ConfirmationController extends HttpServlet {
 
+    private ProductDao productDataStore = ProductDaoMem.getInstance();
     private OrderDao orderDataStore = OrderDaoMem.getInstance();
+    private float grandTotal = orderDataStore.find(1).getGrandTotalPrice();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,8 +40,7 @@ public class ConfirmationController extends HttpServlet {
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
         engine.process("product/confirmation.html", context, resp.getWriter());
-        orderDataStore.find(1).getUser();
-        orderDataStore.find(1).getProducts();
+
 
     }
 }
