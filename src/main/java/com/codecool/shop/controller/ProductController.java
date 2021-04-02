@@ -21,11 +21,11 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
 
-    private ProductDao productDataStore = ProductDaoMem.getInstance();
-    private GenreDao productCategoryDataStore = GenreDaoMem.getInstance();
-    private OrderDao orderDataStore = OrderDaoMem.getInstance();
-    private ArtistDao artistDataStore = ArtistDaoMem.getInstance();
-    private LineItemDao lineItemDataStore = LineItemDaoMem.getInstance();
+    public static ProductDao productDataStore = ProductDaoMem.getInstance();
+    public static GenreDao productCategoryDataStore = GenreDaoMem.getInstance();
+    public static OrderDao orderDataStore = OrderDaoMem.getInstance();
+    public static ArtistDao artistDataStore = ArtistDaoMem.getInstance();
+    public static LineItemDao lineItemDataStore = LineItemDaoMem.getInstance();
 
     private List<Product> products = productDataStore.getAll();
     private List<Artist> artists = artistDataStore.getAll();
@@ -35,9 +35,12 @@ public class ProductController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
+        Order currentOrder = orderDataStore.find(orderDataStore.getAll().size());
+        int orderQuantity = currentOrder.getProductNumbers();
       
         context.setVariable("genres", genres);
         context.setVariable("products", products);
+        context.setVariable("orderQuantity", orderQuantity);
 
         engine.process("product/index.html", context, resp.getWriter());
     }
@@ -45,21 +48,30 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JsonObject data = new Gson().fromJson(req.getReader(), JsonObject.class);
+        Order currentOrder = orderDataStore.find(orderDataStore.getAll().size());
 
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
         if (data.get("name") != null && data.get("price") != null) {
             String recordName = data.get("name").getAsString();
+            System.out.println(recordName);
             float recordPrice = Float.parseFloat(data.get("price").getAsString().split(" ")[0]);
+            int orderQuantity = currentOrder.getProductNumbers();
 
-            LineItem lineItem = new LineItem(recordName,1, recordPrice);
-            lineItemDataStore.add(lineItem);
+            if (lineItemDataStore.findByName(recordName) != null) {
+                LineItem existsItem = lineItemDataStore.findByName(recordName);
+                existsItem.setQuantity(existsItem.getQuantity()+1);
+            }
+            else {
+                LineItem lineItem = new LineItem(recordName,1, recordPrice);
+                lineItemDataStore.add(lineItem);
 
-            Order order = orderDataStore.find(1);
-            order.addProduct(lineItem);
+                currentOrder.addProduct(lineItem);
+            }
 
-            resp.getWriter().write(new Gson().toJson(order.getProductNumbers()));
+            System.out.println(orderQuantity);
+            resp.getWriter().write(new Gson().toJson(orderQuantity));
         }
         else if (data.get("text") != null) {
             String text = data.get("text").getAsString();

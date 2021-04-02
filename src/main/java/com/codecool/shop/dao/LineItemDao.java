@@ -10,6 +10,7 @@ public interface LineItemDao {
     LineItem find(int id);
     LineItem findByName(String name);
     void remove(int id);
+    void removeAll();
     void removeByObject(LineItem lineItem);
 
     List<LineItem> getAll();

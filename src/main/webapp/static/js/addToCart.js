@@ -1,12 +1,17 @@
-let productsNumber = document.querySelector("#products-number");
 const shoppingCart = document.querySelector("#cart");
 const names = document.querySelectorAll(".card-title");
 const prices = document.querySelectorAll(".lead");
 const albums = document.querySelectorAll(".album-names");
+const orderQuantity = document.querySelector('#products-number');
+const hiddenOrderQuantity = document.querySelector('#hidden-products-number');
 
-shoppingCart.addEventListener("click", () => {
-    window.location.href = '/shopping-cart';
-});
+function renderOrderQuantity() {
+    orderQuantity.innerHTML = hiddenOrderQuantity.value;
+}
+
+function increaseOrderQuntatiy() {
+    orderQuantity.innerHTML = parseInt(orderQuantity.innerHTML) + 1;
+}
 
 function addGlobalEventListener(type, classname, callback) {
     document.addEventListener(type, e => {
@@ -14,36 +19,45 @@ function addGlobalEventListener(type, classname, callback) {
     });
 }
 
-if (sessionStorage.getItem("product-numbers")) {
-    productsNumber.innerHTML = sessionStorage.getItem("product-numbers");
-}
-
-addGlobalEventListener("click", "btn btn-outline-primary", e => {
-    let name;
-    let price;
-
-    for (let i = 0; i < names.length; i++) {
-        if (names[i].textContent == e.target.id) {
-            name = albums[i].textContent;
-            price = prices[i].textContent;
-        }
-    }
-
-    let data = {
-        name: name,
-        price: price
-    };
-
-    fetch('/', {
-        method: 'POST',
+async function postData(url = '', data = {}) {
+    const response = await fetch(url, {
+        method: "POST",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
-    })
-        .then(response => response.json())
-        .then(async data => {
-            productsNumber.innerHTML = await data;
-            sessionStorage.setItem("product-numbers", await data);
-        })
-        .catch((error) => {console.error("Error: " + error);
-        });
-});
+    });
+    return response.json();
+}
+
+function main() {
+    renderOrderQuantity();
+
+    shoppingCart.addEventListener("click", () => {
+        window.location.href = '/shopping-cart';
+    });
+
+    addGlobalEventListener("click", "btn btn-outline-primary", e => {
+        let name;
+        let price;
+
+        for (let i = 0; i < names.length; i++) {
+            if (names[i].textContent == e.target.id) {
+                name = albums[i].textContent;
+                price = prices[i].textContent;
+            }
+        }
+
+        let data = {
+            name: name,
+            price: price
+        };
+
+        postData("/", data)
+            .then(async data => {
+                increaseOrderQuntatiy();
+            })
+            .catch((error) => {console.error("Error: " + error);
+            });
+    });
+}
+
+main();

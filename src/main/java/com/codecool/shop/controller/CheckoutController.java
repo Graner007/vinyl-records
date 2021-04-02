@@ -29,12 +29,11 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
 
-    private OrderDao orderDataStore = OrderDaoMem.getInstance();
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
+        Order currentOrder = ProductController.orderDataStore.find(ProductController.orderDataStore.getAll().size());
 
         List<String> dataNames = Arrays.asList("name", "email", "phone", "billingCompany", "billingAddress", "billingCity",
                 "billingState", "billingZip", "shippingAddress", "shippingCity", "shippingState", "shippingZip");
@@ -45,7 +44,7 @@ public class CheckoutController extends HttpServlet {
                 userDatas.add(req.getParameter(dataNames.get(i)));
             }
 
-            orderDataStore.find(1).setUser(new User(userDatas.get(0), userDatas.get(1), userDatas.get(2), userDatas.get(3), userDatas.get(4), userDatas.get(5), userDatas.get(6), Integer.parseInt(userDatas.get(7)), userDatas.get(8), userDatas.get(9),  userDatas.get(10), Integer.parseInt(userDatas.get(11))));
+            currentOrder.setUser(new User(userDatas.get(0), userDatas.get(1), userDatas.get(2), userDatas.get(3), userDatas.get(4), userDatas.get(5), userDatas.get(6), Integer.parseInt(userDatas.get(7)), userDatas.get(8), userDatas.get(9),  userDatas.get(10), Integer.parseInt(userDatas.get(11))));
             resp.sendRedirect(req.getContextPath() + "/payment");
         }
 

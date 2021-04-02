@@ -24,6 +24,8 @@ public class Initializer implements ServletContextListener {
         //setting up a new artist
         Artist eminem = new Artist("Eminem", "American rapper, songwriter, and record producer.");
         artistDataStore.add(eminem);
+        Artist elvisPresley = new Artist("Elvis Presley", "American rock and roll singer and actor");
+        artistDataStore.add(elvisPresley);
         Artist iceT = new Artist("Ice T", "American rapper, actor, songwriter, and producer.");
         artistDataStore.add(iceT);
         Artist ozzyOsborne = new Artist("Ozzy Osborne", "English singer, songwriter, and television personality.");
@@ -46,11 +48,13 @@ public class Initializer implements ServletContextListener {
         GenreDataStore.add(metal);
         Genre pop = new Genre("Pop", "Pop", "Pop music by different artists.");
         GenreDataStore.add(pop);
+        Genre rockAndRoll = new Genre("Rock and Roll", "Rock and Roll", "Rock and roll music by different artists.");
+        GenreDataStore.add(rockAndRoll);
         Genre jazz = new Genre("Jazz", "Jazz", "Jazz music by different artists.");
         GenreDataStore.add(jazz);
 
         //setting up products and printing it
-        productDataStore.add(new Product("Eminem", 9.9f, "USD", "Kamikaze", hiphop, eminem));
+        productDataStore.add(new Product("Elvis Presley", 9.9f, "USD", "Elvis is Back!", rockAndRoll, elvisPresley));
         productDataStore.add(new Product("Ice T", 11.9f, "USD", "The Iceberg", hiphop, iceT));
         productDataStore.add(new Product("Eminem", 14.9f, "USD", "The Marshall Mathers LP2", hiphop, eminem));
         productDataStore.add(new Product("Ozzy Osborne", 9.9f, "USD", "Blizzard Of Oz", metal, ozzyOsborne));

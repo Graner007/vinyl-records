@@ -32,26 +32,24 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/confirmation"})
 public class ConfirmationController extends HttpServlet {
 
-    private OrderDao orderDataStore = OrderDaoMem.getInstance();
-    private float grandTotal = orderDataStore.find(1).getGrandTotalPrice();
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         resp.setCharacterEncoding("UTF-8");
+        Order currentOrder = ProductController.orderDataStore.find(ProductController.orderDataStore.getAll().size()-1);
 
-        context.setVariable("orderId", orderDataStore.find(1).getId());
-        context.setVariable("order", orderDataStore.find(1).getProducts());
-        context.setVariable("userDetails", orderDataStore.find(1).getUser());
+        context.setVariable("orderId", currentOrder.getId());
+        context.setVariable("order", currentOrder.getProducts());
+        context.setVariable("userDetails", currentOrder.getUser());
+        context.setVariable("orderDate", currentOrder.getOrderDate());
 
         Gson gson = new Gson();
-        Order order = orderDataStore.find(1);
         try {
             File myObj = new File("orderInformation.json");
             if (myObj.createNewFile()) {
                 FileWriter myWriter = new FileWriter(myObj.getPath());
-                myWriter.write(gson.toJson(order));
+                myWriter.write(gson.toJson(currentOrder));
                 myWriter.close();
             }
             else {
@@ -64,10 +62,10 @@ public class ConfirmationController extends HttpServlet {
         }
 
         try {
-            File myObj = new File(order.getId()+"2021_03_26.json");
+            File myObj = new File(currentOrder.getId() + String.valueOf(currentOrder.getOrderDate()) + ".json");
             if (myObj.createNewFile()) {
                 FileWriter myWriter = new FileWriter(myObj.getPath());
-                myWriter.write(gson.toJson(orderDataStore.find(1)  + gson.toJson(order.getUser())) + gson.toJson(order.getProducts()));
+                myWriter.write(gson.toJson(currentOrder + gson.toJson(currentOrder.getUser())) + gson.toJson(currentOrder.getProducts()));
                 myWriter.close();
             }
             else {
