@@ -30,6 +30,9 @@ public class LineItemDaoMem implements LineItemDao {
     public LineItem find(int id) { return data.stream().filter(t -> t.getId() == id).findFirst().orElse(null); }
 
     @Override
+    public void removeAll() { data = new ArrayList<>(); }
+
+    @Override
     public void remove(int id) {
         data.remove(find(id));
     }

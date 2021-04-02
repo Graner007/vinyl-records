@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -31,12 +32,11 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/payment"})
 public class PaymentController extends HttpServlet {
 
-    private OrderDao orderDataStore = OrderDaoMem.getInstance();
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
+        Order currentOrder = ProductController.orderDataStore.find(ProductController.orderDataStore.getAll().size());
 
         if (req.getParameterMap().containsKey("card-holder-name")) {
             String ccNumber = req.getParameter("cc-number");
@@ -45,7 +45,12 @@ public class PaymentController extends HttpServlet {
             String cardHolderName = req.getParameter("card-holder-name");
 
             Payment payment = new Payment(ccNumber, ccExp, ccCvc, cardHolderName);
-            orderDataStore.find(1).getUser().setPayment(payment);
+            currentOrder.getUser().setPayment(payment);
+            LocalDate dateNow = LocalDate.now();
+            currentOrder.setOrderDate(dateNow);
+            Order newOrder = new Order();
+            ProductController.orderDataStore.add(newOrder);
+            ProductController.lineItemDataStore.removeAll();
             resp.sendRedirect(req.getContextPath() + "/confirmation");
         }
 
