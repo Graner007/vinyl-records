@@ -25,10 +25,8 @@ for (let i = 0; i < deleteIcons.length; i++) {
                     for (let i = 0; i < items.length; i++) {
                         items[index].textContent = "";
                     }
-                    sessionStorage.setItem("product-numbers", String(sessionStorage.getItem("product-numbers") - 1));
             })
             .catch(error => console.log(error));
-        //delete on server side
     });
 }
 
@@ -57,7 +55,6 @@ for (let i = 0; i < quantities.length; i++) {
                     subTotalPrices[index].innerHTML = data[0].toFixed(2);
                 }
                 grandTotal.innerHTML = data[1].toFixed(2);
-                sessionStorage.setItem("product-numbers", String(sessionStorage.getItem("product-numbers") - 1));
             })
             .catch(error => console.log(error));
     });

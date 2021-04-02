@@ -1,8 +1,15 @@
-let productsNumber = document.querySelector("#products-number");
 const shoppingCart = document.querySelector("#cart");
 const names = document.querySelectorAll(".card-title");
 const prices = document.querySelectorAll(".lead");
 const albums = document.querySelectorAll(".album-names");
+const orderQuantity = document.querySelector('#products-number');
+const hiddenOrderQuantity = document.querySelector('#hidden-products-number');
+
+function renderOrderQuantity() {
+    orderQuantity.innerHTML = hiddenOrderQuantity.value;
+}
+
+renderOrderQuantity();
 
 shoppingCart.addEventListener("click", () => {
     window.location.href = '/shopping-cart';
@@ -12,10 +19,6 @@ function addGlobalEventListener(type, classname, callback) {
     document.addEventListener(type, e => {
         if (e.target.className == classname) callback (e)
     });
-}
-
-if (sessionStorage.getItem("product-numbers")) {
-    productsNumber.innerHTML = sessionStorage.getItem("product-numbers");
 }
 
 addGlobalEventListener("click", "btn btn-outline-primary", e => {
@@ -41,8 +44,7 @@ addGlobalEventListener("click", "btn btn-outline-primary", e => {
     })
         .then(response => response.json())
         .then(async data => {
-            productsNumber.innerHTML = await data;
-            sessionStorage.setItem("product-numbers", await data);
+            console.log(data);
         })
         .catch((error) => {console.error("Error: " + error);
         });

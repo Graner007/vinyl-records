@@ -35,9 +35,11 @@ public class ProductController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
+        int orderQuantity = orderDataStore.find(1).getProductNumbers();
       
         context.setVariable("genres", genres);
         context.setVariable("products", products);
+        context.setVariable("orderQuantity", orderQuantity);
 
         engine.process("product/index.html", context, resp.getWriter());
     }
