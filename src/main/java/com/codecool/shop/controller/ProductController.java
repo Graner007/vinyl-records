@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -57,63 +56,78 @@ public class ProductController extends HttpServlet {
             String recordName = data.get("name").getAsString();
             System.out.println(recordName);
             float recordPrice = Float.parseFloat(data.get("price").getAsString().split(" ")[0]);
+            addLineItemToOrder(currentOrder, recordName, recordPrice);
+
             int orderQuantity = currentOrder.getProductNumbers();
 
-            if (lineItemDataStore.findByName(recordName) != null) {
-                LineItem existsItem = lineItemDataStore.findByName(recordName);
-                existsItem.setQuantity(existsItem.getQuantity()+1);
-            }
-            else {
-                LineItem lineItem = new LineItem(recordName,1, recordPrice);
-                lineItemDataStore.add(lineItem);
-
-                currentOrder.addProduct(lineItem);
-            }
-
-            System.out.println(orderQuantity);
             resp.getWriter().write(new Gson().toJson(orderQuantity));
         }
         else if (data.get("text") != null) {
             String text = data.get("text").getAsString();
-            List<String> names = new ArrayList<>();
+            List<String> names = getArtistsOrGenres(text);
 
-            switch (text) {
-                case "genre":
-                    genres.forEach(genre -> names.add(genre.getName()));
-                    resp.getWriter().write(new Gson().toJson(names));
-                    break;
-                case "artist":
-                    artists.forEach(artist -> names.add(artist.getName()));
-                    resp.getWriter().write(new Gson().toJson(names));
-                    break;
-            }
+            resp.getWriter().write(new Gson().toJson(names));
         }
         else if (data.get("filter") != null) {
             String filter = data.get("filter").getAsString();
-            List<List<String>> filterdProducts = new ArrayList<>();
-            List<Product> newProducts = new ArrayList<>();
-
-            products.forEach(product-> {
-                List<String> productList = new ArrayList<>();
-                if (product.getProductCategory().getName().equals(filter)) {
-                    productList.add(product.getName());
-                    productList.add(product.getProductCategory().getName());
-                    productList.add(product.getPrice());
-                    productList.add(product.getDescription());
-                    filterdProducts.add(productList);
-                    newProducts.add(product);
-                }
-                if (product.getSupplier().getName().equals(filter)) {
-                    productList.add(product.getName());
-                    productList.add(product.getProductCategory().getName());
-                    productList.add(product.getPrice());
-                    productList.add(product.getDescription());
-                    filterdProducts.add(productList);
-                    newProducts.add(product);
-                }
-            });
+            List<List<String>> filterdProducts = getFilteredProductsByFilter(filter);
 
             resp.getWriter().write(new Gson().toJson(filterdProducts));
+        }
+    }
+
+    private List<List<String>> getFilteredProductsByFilter(String filter) {
+        List<List<String>> filterdProducts = new ArrayList<>();
+        List<Product> newProducts = new ArrayList<>();
+
+        products.forEach(product-> {
+            List<String> productList = new ArrayList<>();
+            if (product.getProductCategory().getName().equals(filter)) {
+                productList.add(product.getName());
+                productList.add(product.getProductCategory().getName());
+                productList.add(product.getPrice());
+                productList.add(product.getDescription());
+                filterdProducts.add(productList);
+                newProducts.add(product);
+            }
+            if (product.getSupplier().getName().equals(filter)) {
+                productList.add(product.getName());
+                productList.add(product.getProductCategory().getName());
+                productList.add(product.getPrice());
+                productList.add(product.getDescription());
+                filterdProducts.add(productList);
+                newProducts.add(product);
+            }
+        });
+
+        return filterdProducts;
+    }
+
+    private List<String> getArtistsOrGenres(String text) {
+        List<String> names = new ArrayList<>();
+
+        switch (text) {
+            case "genre":
+                genres.forEach(genre -> names.add(genre.getName()));
+                break;
+            case "artist":
+                artists.forEach(artist -> names.add(artist.getName()));
+                break;
+        }
+        
+        return names;
+    }
+
+    private void addLineItemToOrder(Order currentOrder, String recordName, float recordPrice) {
+        if (lineItemDataStore.findByName(recordName) != null) {
+            LineItem existsItem = lineItemDataStore.findByName(recordName);
+            existsItem.setQuantity(existsItem.getQuantity()+1);
+        }
+        else {
+            LineItem lineItem = new LineItem(recordName,1, recordPrice);
+            lineItemDataStore.add(lineItem);
+
+            currentOrder.addProduct(lineItem);
         }
     }
 }

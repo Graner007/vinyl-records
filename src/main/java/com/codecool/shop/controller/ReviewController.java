@@ -1,14 +1,6 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.GenreDao;
-import com.codecool.shop.dao.LineItemDao;
-import com.codecool.shop.dao.OrderDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.implementation.GenreDaoMem;
-import com.codecool.shop.dao.implementation.LineItemDaoMem;
-import com.codecool.shop.dao.implementation.OrderDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.Genre;
 import com.codecool.shop.model.LineItem;
 import com.codecool.shop.model.Order;
@@ -16,7 +8,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -54,22 +45,28 @@ public class ReviewController extends HttpServlet {
         if (data.get("quantity") != null && data.get("name") != null) {
             int quantity = data.get("quantity").getAsInt();
             String name = data.get("name").getAsString();
-            List<Float> result = new ArrayList<>();
-
-            LineItem lineItem = ProductController.lineItemDataStore.findByName(name);
-            lineItem.setQuantity(quantity);
-
-            if (quantity == 0) {
-                ProductController.lineItemDataStore.removeByObject(lineItem);
-                ProductController.orderDataStore.removeLineItem(lineItem);
-            }
-
-            float newGrandTotal = currentOrder.getGrandTotalPrice();
-
-            result.add(lineItem.getSubTotalPrice());
-            result.add(newGrandTotal);
+            List<Float> result = changeProductQuantity(currentOrder, name, quantity);
 
             resp.getWriter().write(new Gson().toJson(result));
         }
+    }
+
+    private List<Float> changeProductQuantity(Order currentOrder, String name, int quantity) {
+        List<Float> result = new ArrayList<>();
+
+        LineItem lineItem = ProductController.lineItemDataStore.findByName(name);
+        lineItem.setQuantity(quantity);
+
+        if (quantity == 0) {
+            ProductController.lineItemDataStore.removeByObject(lineItem);
+            ProductController.orderDataStore.removeLineItem(lineItem);
+        }
+
+        float newGrandTotal = currentOrder.getGrandTotalPrice();
+
+        result.add(lineItem.getSubTotalPrice());
+        result.add(newGrandTotal);
+
+        return result;
     }
 }
