@@ -5,6 +5,7 @@ import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductService{
@@ -22,7 +23,8 @@ public class ProductService{
 
     public List<Product> getProductsForCategory(int categoryId){
         var category = productCategoryDao.find(categoryId);
-        return productDao.getBy(category);
+        //return productDao.getBy(category);
+        return new ArrayList<>();
     }
 
 

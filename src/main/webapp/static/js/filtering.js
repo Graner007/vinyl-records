@@ -13,7 +13,7 @@ async function postData(url = '', data = {}) {
     return response.json();
 }
 
-function createCard(albumName, artistName, price, genre) {
+function createCard(artistName, genre, price, albumName) {
     let div = document.createElement("div");
     const classList = ['col', 'col-sm-12', 'col-md-6', 'col-lg-4'];
 
