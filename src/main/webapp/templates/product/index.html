@@ -2,10 +2,18 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
+<<<<<<< HEAD
     <meta name="author" content="Codecool" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <title>Codecool Shop</title>
+=======
+    <meta name="author" content="BM Records" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="icon" href="/static/img/vinyl.png">
+
+    <title>BM Records</title>
+>>>>>>> codecool-shop-1-java-Graner007/development
 
     <!-- Bootstrap components -->
     <!-- Latest compiled and minified Jquery -->
@@ -18,18 +26,31 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+<<<<<<< HEAD
     integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+=======
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+>>>>>>> codecool-shop-1-java-Graner007/development
 
     <!-- Latest compiled and minified CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- End of Bootstrap components -->
+<<<<<<< HEAD
 
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+=======
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/header.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/sidebar.css" />
+>>>>>>> codecool-shop-1-java-Graner007/development
 </head>
 
 <body>
 
+<<<<<<< HEAD
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
 </div>
@@ -38,10 +59,23 @@
     <div class="card">
         <strong th:text="${category.name}">Category Title</strong>
     </div>
+=======
+<div th:replace="header.html :: copy"></div>
+<input type="hidden" id="hidden-products-number" th:value="${orderQuantity}">
+
+<div class="sidebar">
+    <ul id="sidebarContent">
+        <li class="filters" th:each="genre : ${genres}" th:text="${genre.getName()}"></li>
+    </ul>
+</div>
+<br>
+<div class="container">
+>>>>>>> codecool-shop-1-java-Graner007/development
 
     <div id="products" class="row">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
             <div class="card">
+<<<<<<< HEAD
                 <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
                 <div class="card-header">
                     <h4 class="card-title" th:text="${prod.name}">Product name</h4>
@@ -53,6 +87,20 @@
                     </div>
                     <div class="card-text">
                         <a class="btn btn-success" href="#">Add to cart</a>
+=======
+                <img th:attr="src='/static/img/product_' + ${prod.description} + '.png'" alt="" />
+                <div class="card-header colorize">
+                    <h4 class="card-text album-names" th:text="${prod.description}">Album title</h4>
+                    <h6 class="card-title" th:text="${prod.name}">Artist</h6>
+                    <p class="card-text" th:text="${prod.productCategory.genre}">Album genre</p>
+                </div>
+                <div class="card-body">
+                    <div class="card-text toCenter">
+                        <p class="lead" th:text="${prod.getPrice()}">Price</p>
+                    </div>
+                    <div class="card-text toCenter">
+                        <button class="btn btn-outline-primary" th:id="${prod.name}">Add to cart</button>
+>>>>>>> codecool-shop-1-java-Graner007/development
                     </div>
                 </div>
             </div>
@@ -60,8 +108,18 @@
     </div>
 
 </div>
+<<<<<<< HEAD
 
 <div th:replace="footer.html :: copy"></div>
 
+=======
+<br><br><br><br>
+<div th:replace="footer.html :: copy"></div>
+
+<script src="/static/js/addToCart.js"></script>
+<script src="/static/js/filtering.js"></script>
+</script>
+
+>>>>>>> codecool-shop-1-java-Graner007/development
 </body>
 </html>

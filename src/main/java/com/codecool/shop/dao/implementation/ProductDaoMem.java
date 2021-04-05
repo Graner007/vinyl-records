@@ -2,9 +2,15 @@ package com.codecool.shop.dao.implementation;
 
 
 import com.codecool.shop.dao.ProductDao;
+<<<<<<< HEAD
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
+=======
+import com.codecool.shop.model.Genre;
+import com.codecool.shop.model.Product;
+import com.codecool.shop.model.Artist;
+>>>>>>> codecool-shop-1-java-Graner007/development
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +23,12 @@ public class ProductDaoMem implements ProductDao {
 
     /* A private Constructor prevents any other class from instantiating.
      */
+<<<<<<< HEAD
     private ProductDaoMem() {
     }
+=======
+    private ProductDaoMem() {}
+>>>>>>> codecool-shop-1-java-Graner007/development
 
     public static ProductDaoMem getInstance() {
         if (instance == null) {
@@ -49,6 +59,7 @@ public class ProductDaoMem implements ProductDao {
     }
 
     @Override
+<<<<<<< HEAD
     public List<Product> getBy(Supplier supplier) {
         return data.stream().filter(t -> t.getSupplier().equals(supplier)).collect(Collectors.toList());
     }
@@ -56,5 +67,17 @@ public class ProductDaoMem implements ProductDao {
     @Override
     public List<Product> getBy(ProductCategory productCategory) {
         return data.stream().filter(t -> t.getProductCategory().equals(productCategory)).collect(Collectors.toList());
+=======
+    public Product findByName(String name) { return data.stream().filter(t -> t.getDescription() == name).findFirst().orElse(null); }
+
+    @Override
+    public List<Product> getBy(Artist artist) {
+        return data.stream().filter(t -> t.getSupplier().equals(artist)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Product> getBy(Genre genre) {
+        return data.stream().filter(t -> t.getProductCategory().equals(genre)).collect(Collectors.toList());
+>>>>>>> codecool-shop-1-java-Graner007/development
     }
 }

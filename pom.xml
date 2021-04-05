@@ -45,10 +45,15 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${version.plugin.jetty}</version>
                 <configuration>
+<<<<<<< HEAD
                     <!-- On some configs this causes shutdown of context on -->
                     <!-- a page load so disabled. -->
                     <!-- <reload>automatic</reload> -->
                     <!-- <scanIntervalSeconds>1</scanIntervalSeconds> -->
+=======
+                    <reload>automatic</reload>
+                    <scanIntervalSeconds>1</scanIntervalSeconds>
+>>>>>>> codecool-shop-1-java-Graner007/development
                 </configuration>
             </plugin>
         </plugins>
@@ -61,7 +66,10 @@
             <version>${version.javax.servlet.api}</version>
             <scope>provided</scope>
         </dependency>
+<<<<<<< HEAD
         <!-- See comment at jetty plugin -->
+=======
+>>>>>>> codecool-shop-1-java-Graner007/development
         <!-- <dependency> -->
         <!--   <groupId>org.eclipse.jetty</groupId> -->
         <!--   <artifactId>jetty-io</artifactId> -->
@@ -72,5 +80,13 @@
             <artifactId>thymeleaf</artifactId>
             <version>${version.thymeleaf}</version>
         </dependency>
+<<<<<<< HEAD
+=======
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.5</version>
+        </dependency>
+>>>>>>> codecool-shop-1-java-Graner007/development
     </dependencies>
 </project>

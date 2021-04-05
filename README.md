@@ -18,7 +18,6 @@ checkout items and make payments. But also can log in and see the abandoned shop
 - how to use the `DAO` design pattern in `Java`,
 - refreshing SQL knowledge
 
-
 ## Tasks
 
 1. Create a new sprint tab on the existing backlog. Last week you had a long list of stories, a few new stories this week.
@@ -118,4 +117,3 @@ least on abstract class, there is at least one interface implemented
 - <i class="far fa-exclamation"></i> [Introducing servlets](project/curriculum/materials/pages/java/introducing-servlets.md)
 - <i class="far fa-exclamation"></i> [Servlet tutorial](https://www.tutorialspoint.com/servlets/servlets-form-data.htm)
 - <i class="far fa-exclamation"></i> [Java properties](https://www.baeldung.com/java-properties)
-
