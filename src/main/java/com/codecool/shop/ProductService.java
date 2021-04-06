@@ -1,4 +1,4 @@
-package com.codecool.shop.service;
+package com.codecool.shop;
 
 import com.codecool.shop.dao.GenreDao;
 import com.codecool.shop.dao.ProductDao;
