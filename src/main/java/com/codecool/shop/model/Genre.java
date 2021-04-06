@@ -13,6 +13,10 @@ public class Genre extends BaseModel {
         this.categories = new ArrayList<>();
     }
 
+    public Genre(String name, String descripton) {
+        super(name, descripton);
+    }
+
     public String getGenre() {
         return genre;
     }

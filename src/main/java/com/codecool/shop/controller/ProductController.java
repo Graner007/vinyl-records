@@ -1,21 +1,16 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.service.ProductService;
+import com.codecool.shop.dao.mem.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import com.codecool.shop.dao.*;
-import com.codecool.shop.dao.implementation.*;
-import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.mem.*;
 import com.codecool.shop.model.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

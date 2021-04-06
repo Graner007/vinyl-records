@@ -8,13 +8,29 @@ public class Product extends BaseModel {
     private Currency defaultCurrency;
     private Genre genre;
     private Artist artist;
-
-
+    private int genreId;
+    private int artistId;
     public Product(String name, float defaultPrice, String currencyString, String description, Genre genre, Artist artist) {
         super(name, description);
         this.setPrice(defaultPrice, currencyString);
         this.setSupplier(artist);
         this.setProductCategory(genre);
+    }
+
+    public Product(String name, String description, float defaultPrice, Currency defaultCurrency, int genreId, int artistId) {
+        super(name, description);
+        this.defaultPrice = defaultPrice;
+        this.defaultCurrency = defaultCurrency;
+        this.genreId = genreId;
+        this.artistId = artistId;
+    }
+
+    public int getGenreId() {
+        return genreId;
+    }
+
+    public int getArtistId() {
+        return artistId;
     }
 
     public float getDefaultPrice() {
