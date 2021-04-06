@@ -1,7 +1,7 @@
 package com.codecool.shop.config;
 
 import com.codecool.shop.dao.*;
-import com.codecool.shop.dao.implementation.*;
+import com.codecool.shop.dao.mem.*;
 import com.codecool.shop.model.Artist;
 import com.codecool.shop.model.Genre;
 import com.codecool.shop.model.Order;

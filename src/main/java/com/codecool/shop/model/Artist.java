@@ -11,6 +11,10 @@ public class Artist extends BaseModel {
         this.products = new ArrayList<>();
     }
 
+    public Artist(String name) {
+        super(name);
+    }
+
     public void setProducts(ArrayList<Product> products) {
         this.products = products;
     }
