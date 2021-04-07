@@ -44,6 +44,11 @@ public class ArtistDaoMem implements ArtistDao {
     }
 
     @Override
+    public void removeAll() {
+
+    }
+
+    @Override
     public List<Artist> getAll() {
         return data;
     }

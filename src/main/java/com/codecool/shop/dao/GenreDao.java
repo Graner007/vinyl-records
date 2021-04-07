@@ -9,6 +9,7 @@ public interface GenreDao {
     void add(Genre category);
     Genre find(int id);
     void remove(int id);
+    void removeALl();
 
     List<Genre> getAll();
 

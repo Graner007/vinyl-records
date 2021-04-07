@@ -41,6 +41,11 @@ public class GenreDaoMem implements GenreDao {
     }
 
     @Override
+    public void removeALl() {
+
+    }
+
+    @Override
     public List<Genre> getAll() {
         return data;
     }
