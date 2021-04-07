@@ -7,6 +7,8 @@ import com.codecool.shop.model.Artist;
 import com.codecool.shop.model.Genre;
 import com.codecool.shop.model.Order;
 import com.codecool.shop.model.Product;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -23,6 +25,7 @@ public class Initializer implements ServletContextListener {
     public static List<Product> products;
     public static List<Genre> genres;
     public static List<Artist> artists;
+    private static final Logger logger = LoggerFactory.getLogger(Initializer.class);
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -61,6 +64,7 @@ public class Initializer implements ServletContextListener {
         try {
             appProps.load(new FileInputStream(appConfigPath));
         } catch (IOException e) {
+            logger.error("File not found");
             e.printStackTrace();
         }
 
@@ -148,7 +152,7 @@ public class Initializer implements ServletContextListener {
             dbManager.setup(user, dbname, password);
             return dbManager;
         } catch (SQLException | IOException ex) {
-            System.out.println("Cannot connect to database.");
+            logger.error("Cannot connect to database.");
         }
 
         return null;

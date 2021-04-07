@@ -2,17 +2,18 @@ package com.codecool.shop.dao.jdbc;
 
 import com.codecool.shop.dao.GenreDao;
 import com.codecool.shop.model.Genre;
-import com.codecool.shop.model.Product;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
 
 public class GenreDaoJdbc implements GenreDao {
 
     private DataSource dataSource;
+    private static final Logger logger = LoggerFactory.getLogger(GenreDaoJdbc.class);
 
     public GenreDaoJdbc(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -30,6 +31,7 @@ public class GenreDaoJdbc implements GenreDao {
             resultSet.next();
             genre.setId(resultSet.getInt(1));
         } catch (SQLException e) {
+            logger.error("Cannot add genre.");
             throw new RuntimeException(e);
         }
     }
@@ -51,6 +53,7 @@ public class GenreDaoJdbc implements GenreDao {
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error("Cannot remove all genres.");
             throw new RuntimeException(e);
         }
     }
@@ -69,6 +72,7 @@ public class GenreDaoJdbc implements GenreDao {
             }
             return result;
         } catch (SQLException e) {
+            logger.error("Cannot get all genres.");
             throw new RuntimeException("Error while reading all genres", e);
         }
     }

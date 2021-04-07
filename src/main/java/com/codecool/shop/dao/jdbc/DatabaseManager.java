@@ -57,7 +57,7 @@ public class DatabaseManager {
 
     public void removeGenres() { genreDao.removeALl(); }
 
-    private DataSource connect(String user, String dbname, String password) throws SQLException, IOException {
+    private DataSource connect(String user, String dbname, String password) throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
 
         dataSource.setDatabaseName(dbname);

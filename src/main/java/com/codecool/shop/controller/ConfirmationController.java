@@ -1,8 +1,11 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.config.Initializer;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.model.Order;
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import javax.servlet.ServletException;
@@ -17,6 +20,8 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/confirmation"})
 public class ConfirmationController extends HttpServlet {
+
+    private static final Logger logger = LoggerFactory.getLogger(ConfirmationController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -49,10 +54,10 @@ public class ConfirmationController extends HttpServlet {
             bw.write(text);
             bw.newLine();
             bw.close();
+            logger.trace("Append was succesfull.");
         }
         catch (IOException e) {
-            System.out.println(e);
-            e.printStackTrace();
+            logger.error(String.valueOf(e));
         }
     }
 
@@ -63,14 +68,14 @@ public class ConfirmationController extends HttpServlet {
                 FileWriter myWriter = new FileWriter(myObj.getPath());
                 myWriter.write(text);
                 myWriter.close();
+                logger.trace("Create new file was succesfull.");
             }
             else {
-                System.out.println("File already exists.");
+                logger.warn("File already exits.");
             }
         }
         catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+            logger.error("An error occurred.");
         }
     }
 }

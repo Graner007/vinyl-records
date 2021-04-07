@@ -2,6 +2,8 @@ package com.codecool.shop.dao.jdbc;
 
 import com.codecool.shop.dao.ArtistDao;
 import com.codecool.shop.model.Artist;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -11,6 +13,7 @@ import java.util.List;
 public class ArtistDaoJdbc implements ArtistDao {
 
     private DataSource dataSource;
+    private static final Logger logger = LoggerFactory.getLogger(ArtistDaoJdbc.class);
 
     public ArtistDaoJdbc(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -28,6 +31,7 @@ public class ArtistDaoJdbc implements ArtistDao {
             resultSet.next();
             artist.setId(resultSet.getInt(1));
         } catch (SQLException e) {
+            logger.error("Cannot add artist.");
             throw new RuntimeException(e);
         }
     }
@@ -51,6 +55,7 @@ public class ArtistDaoJdbc implements ArtistDao {
             artist.setId(rs.getInt(1));
             return artist;
         } catch (SQLException e) {
+            logger.error("Cannot find artist by name.");
             throw new RuntimeException("Error while reading artist with name: " + name, e);
         }
     }
@@ -66,6 +71,7 @@ public class ArtistDaoJdbc implements ArtistDao {
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error("Cannot remove all artists.");
             throw new RuntimeException(e);
         }
     }
@@ -84,6 +90,7 @@ public class ArtistDaoJdbc implements ArtistDao {
             }
             return result;
         } catch (SQLException e) {
+            logger.error("Cannot get all artists.");
             throw new RuntimeException("Error while reading all artists", e);
         }
     }
