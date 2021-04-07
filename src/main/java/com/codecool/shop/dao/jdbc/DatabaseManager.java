@@ -9,17 +9,18 @@ import com.codecool.shop.model.Product;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class GameDatabaseManager {
+public class DatabaseManager {
 
     private ProductDao productDao;
     private GenreDao genreDao;
     private ArtistDao artistDao;
 
-    public void setup() throws SQLException {
-        DataSource dataSource = connect();
+    public void setup(String user, String dbname, String password) throws SQLException, IOException {
+        DataSource dataSource = connect(user, dbname, password);
         productDao = new ProductDaoJdbc(dataSource);
         genreDao = new GenreDaoJdbc(dataSource);
         artistDao = new ArtistDaoJdbc(dataSource);
@@ -50,13 +51,16 @@ public class GameDatabaseManager {
         artistDao.add(artist);
     }
 
-    private DataSource connect() throws SQLException {
-        PGSimpleDataSource dataSource = new PGSimpleDataSource();
-        String dbName = System.getenv("DATABASE");
-        String user = System.getenv(" USER");
-        String password = System.getenv("PASSWORD");
+    public void removeProducts() { productDao.removeAll(); }
 
-        dataSource.setDatabaseName(dbName);
+    public void removeArtists() { artistDao.removeAll(); }
+
+    public void removeGenres() { genreDao.removeALl(); }
+
+    private DataSource connect(String user, String dbname, String password) throws SQLException, IOException {
+        PGSimpleDataSource dataSource = new PGSimpleDataSource();
+
+        dataSource.setDatabaseName(dbname);
         dataSource.setUser(user);
         dataSource.setPassword(password);
 

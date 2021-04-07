@@ -8,7 +8,6 @@ import com.codecool.shop.model.Product;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
 
 public class ProductDaoJdbc implements ProductDao {
@@ -51,6 +50,17 @@ public class ProductDaoJdbc implements ProductDao {
 
     @Override
     public void remove(int id) {
+    }
+
+    @Override
+    public void removeAll() {
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "DELETE FROM product";
+            PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

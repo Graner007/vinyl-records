@@ -7,7 +7,7 @@ public class Artist extends BaseModel {
     private List<Product> products;
 
     public Artist(String name, String description) {
-        super(name);
+        super(name, description);
         this.products = new ArrayList<>();
     }
 

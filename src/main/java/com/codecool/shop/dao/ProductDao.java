@@ -12,6 +12,7 @@ public interface ProductDao {
     Product find(int id);
     Product findByName(String name);
     void remove(int id);
+    void removeAll();
 
     List<Product> getAll();
     List<Product> getBy(Artist artist);

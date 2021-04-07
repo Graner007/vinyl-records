@@ -45,6 +45,17 @@ public class GenreDaoJdbc implements GenreDao {
     }
 
     @Override
+    public void removeALl() {
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "DELETE FROM genre";
+            PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<Genre> getAll() {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "SELECT id, name, description FROM genre";

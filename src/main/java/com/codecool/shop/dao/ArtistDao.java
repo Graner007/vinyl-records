@@ -10,6 +10,7 @@ public interface ArtistDao {
     Artist find(int id);
     Artist findByName(String name);
     void remove(int id);
+    void removeAll();
 
     List<Artist> getAll();
 }

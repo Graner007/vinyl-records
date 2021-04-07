@@ -42,6 +42,11 @@ public class ProductDaoMem implements ProductDao {
     }
 
     @Override
+    public void removeAll() {
+
+    }
+
+    @Override
     public List<Product> getAll() {
         return data;
     }
