@@ -26,6 +26,7 @@ public class GameDatabaseManager {
     }
 
     public List<Product> getAllProducts() {
+        System.out.println(productDao.getAll().size());
         return productDao.getAll();
     }
 
@@ -52,7 +53,7 @@ public class GameDatabaseManager {
     private DataSource connect() throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         String dbName = System.getenv("DATABASE");
-        String user = System.getenv("USER");
+        String user = System.getenv(" USER");
         String password = System.getenv("PASSWORD");
 
         dataSource.setDatabaseName(dbName);

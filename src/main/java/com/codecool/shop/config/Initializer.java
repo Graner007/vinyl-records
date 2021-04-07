@@ -22,7 +22,7 @@ public class Initializer implements ServletContextListener {
         OrderDao orderDataStore = OrderDaoMem.getInstance();
 
         //setting up a new artist
-        Artist eminem = new Artist("Eminem", "American rapper, songwriter, and record producer.");
+        /*Artist eminem = new Artist("Eminem", "American rapper, songwriter, and record producer.");
         artistDataStore.add(eminem);
         Artist elvisPresley = new Artist("Elvis Presley", "American rock and roll singer and actor");
         artistDataStore.add(elvisPresley);
@@ -62,7 +62,7 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("Dua Lipa", 9.9f, "USD", "Future Nostalgia", pop, duaLipa));
         productDataStore.add(new Product("Ariana Grande", 11.9f, "USD", "Positions", pop, arianaGrande));
         productDataStore.add(new Product("Tony Allen", 11.9f, "USD", "There Is No End", jazz, tonyAllen));
-        productDataStore.add(new Product("Nubiyan Twist", 13.9f, "USD", "Freedom Fables", jazz, nubiyanTwist));
+        productDataStore.add(new Product("Nubiyan Twist", 13.9f, "USD", "Freedom Fables", jazz, nubiyanTwist));*/
 
         orderDataStore.add(new Order());
     }

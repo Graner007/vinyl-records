@@ -1,6 +1,7 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.jdbc.GameDatabaseManager;
 import com.codecool.shop.dao.mem.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
 import org.thymeleaf.TemplateEngine;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,20 +30,29 @@ public class ProductController extends HttpServlet {
     public static OrderDao orderDataStore = OrderDaoMem.getInstance();
     public static ArtistDao artistDataStore = ArtistDaoMem.getInstance();
     public static LineItemDao lineItemDataStore = LineItemDaoMem.getInstance();
+    public static GameDatabaseManager dbManager;
 
-    private List<Product> products = productDataStore.getAll();
-    private List<Artist> artists = artistDataStore.getAll();
-    private List<Genre> genres = productCategoryDataStore.getAll();
+    private List<Product> productsMem = productDataStore.getAll();
+    private List<Artist> artistsMem = artistDataStore.getAll();
+    private List<Genre> genresMem = productCategoryDataStore.getAll();
+
+    private List<Product> productsJdbc;
+    private List<Genre> genresJdbc;
+    private List<Artist> artistsJdbc;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setupDbManager();
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         Order currentOrder = orderDataStore.find(orderDataStore.getAll().size());
+        productsJdbc = dbManager.getAllProducts();
+        genresJdbc = dbManager.getAllGenres();
+        artistsJdbc = dbManager.getAllArtists();
         int orderQuantity = currentOrder.getProductNumbers();
       
-        context.setVariable("genres", genres);
-        context.setVariable("products", products);
+        context.setVariable("genres", genresJdbc);
+        context.setVariable("products", productsJdbc);
         context.setVariable("orderQuantity", orderQuantity);
 
         engine.process("product/index.html", context, resp.getWriter());
@@ -83,7 +94,7 @@ public class ProductController extends HttpServlet {
         List<List<String>> filterdProducts = new ArrayList<>();
         List<Product> newProducts = new ArrayList<>();
 
-        products.forEach(product-> {
+        productsJdbc.forEach(product-> {
             List<String> productList = new ArrayList<>();
             if (product.getProductCategory().getName().equals(filter)) {
                 productList.add(product.getName());
@@ -111,10 +122,10 @@ public class ProductController extends HttpServlet {
 
         switch (text) {
             case "genre":
-                genres.forEach(genre -> names.add(genre.getName()));
+                genresJdbc.forEach(genre -> names.add(genre.getName()));
                 break;
             case "artist":
-                artists.forEach(artist -> names.add(artist.getName()));
+                artistsJdbc.forEach(artist -> names.add(artist.getName()));
                 break;
         }
         
@@ -131,6 +142,15 @@ public class ProductController extends HttpServlet {
             lineItemDataStore.add(lineItem);
 
             currentOrder.addProduct(lineItem);
+        }
+    }
+
+    public void setupDbManager() {
+        dbManager = new GameDatabaseManager();
+        try {
+            dbManager.setup();
+        } catch (SQLException ex) {
+            System.out.println("Cannot connect to database.");
         }
     }
 
