@@ -16,15 +16,11 @@ import javax.servlet.annotation.WebListener;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Properties;
 
 @WebListener
 public class Initializer implements ServletContextListener {
 
-    public static List<Product> products;
-    public static List<Genre> genres;
-    public static List<Artist> artists;
     private static final Logger logger = LoggerFactory.getLogger(Initializer.class);
 
     @Override
@@ -101,10 +97,6 @@ public class Initializer implements ServletContextListener {
             dbManager.addProduct(positions);
             dbManager.addProduct(thereIsNoEnd);
             dbManager.addProduct(freedomFables);
-
-            products = dbManager.getAllProducts();
-            artists = dbManager.getAllArtists();
-            genres = dbManager.getAllGenres();
         }
         else {
             ProductDao productsDao = ProductDaoMem.getInstance();
@@ -136,10 +128,6 @@ public class Initializer implements ServletContextListener {
             productsDao.add(positions);
             productsDao.add(thereIsNoEnd);
             productsDao.add(freedomFables);
-
-            products = productsDao.getAll();
-            artists = artistsDao.getAll();
-            genres = genresDao.getAll();
         }
 
         OrderDao orderDataStore = OrderDaoMem.getInstance();

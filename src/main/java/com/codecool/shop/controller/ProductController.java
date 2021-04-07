@@ -2,6 +2,7 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.Initializer;
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.service.ProductService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import com.codecool.shop.dao.*;
@@ -24,16 +25,18 @@ public class ProductController extends HttpServlet {
 
     public static OrderDao orderDataStore = OrderDaoMem.getInstance();
     public static LineItemDao lineItemDataStore = LineItemDaoMem.getInstance();
+    private ProductService productService = new ProductService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
+
         Order currentOrder = orderDataStore.find(orderDataStore.getAll().size());
         int orderQuantity = currentOrder.getProductNumbers();
       
-        context.setVariable("genres", Initializer.genres);
-        context.setVariable("products", Initializer.products);
+        context.setVariable("genres", productService.getAllGenres());
+        context.setVariable("products", productService.getAllProducts());
         context.setVariable("orderQuantity", orderQuantity);
 
         engine.process("product/index.html", context, resp.getWriter());
@@ -75,7 +78,7 @@ public class ProductController extends HttpServlet {
         List<List<String>> filterdProducts = new ArrayList<>();
         List<Product> newProducts = new ArrayList<>();
 
-        Initializer.products.forEach(product-> {
+        productService.getAllProducts().forEach(product-> {
             List<String> productList = new ArrayList<>();
             if (product.getProductCategory().getName().equals(filter)) {
                 productList.add(product.getName());
@@ -103,10 +106,10 @@ public class ProductController extends HttpServlet {
 
         switch (text) {
             case "genre":
-                Initializer.genres.forEach(genre -> names.add(genre.getName()));
+                productService.getAllGenres().forEach(genre -> names.add(genre.getName()));
                 break;
             case "artist":
-                Initializer.artists.forEach(artist -> names.add(artist.getName()));
+                productService.getAllArtists().forEach(artist -> names.add(artist.getName()));
                 break;
         }
         
