@@ -1,7 +1,6 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.model.Genre;
 import com.codecool.shop.model.LineItem;
 import com.codecool.shop.model.Order;
 import com.google.gson.Gson;
@@ -25,9 +24,7 @@ public class ReviewController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         Order currentOrder = ProductController.orderDataStore.find(ProductController.orderDataStore.getAll().size());
-        Genre category = ProductController.productCategoryDataStore.find(ProductController.productCategoryDataStore.getAll().size());
 
-        context.setVariable("category", category);
         context.setVariable("cart", currentOrder.getProducts());
         context.setVariable("grandTotal", currentOrder.getGrandTotalPrice());
 

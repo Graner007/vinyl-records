@@ -2,7 +2,6 @@ package com.codecool.shop.dao.jdbc;
 
 import com.codecool.shop.dao.ArtistDao;
 import com.codecool.shop.model.Artist;
-import com.codecool.shop.model.Genre;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -59,6 +58,16 @@ public class ArtistDaoJdbc implements ArtistDao {
     @Override
     public void remove(int id) {
 
+    }
+
+    public void removeAll() {
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "DELETE FROM artist";
+            PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

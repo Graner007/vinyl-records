@@ -1,6 +1,7 @@
 package com.codecool.shop.config;
 
 import com.codecool.shop.dao.*;
+import com.codecool.shop.dao.jdbc.DatabaseManager;
 import com.codecool.shop.dao.mem.*;
 import com.codecool.shop.model.Artist;
 import com.codecool.shop.model.Genre;
@@ -10,60 +11,146 @@ import com.codecool.shop.model.Product;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Properties;
 
 @WebListener
 public class Initializer implements ServletContextListener {
 
+    public static List<Product> products;
+    public static List<Genre> genres;
+    public static List<Artist> artists;
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        GenreDao GenreDataStore = GenreDaoMem.getInstance();
-        ArtistDao artistDataStore = ArtistDaoMem.getInstance();
-        OrderDao orderDataStore = OrderDaoMem.getInstance();
-
-        //setting up a new artist
-        /*Artist eminem = new Artist("Eminem", "American rapper, songwriter, and record producer.");
-        artistDataStore.add(eminem);
+        //setting up artists
+        Artist eminem = new Artist("Eminem", "American rapper, songwriter, and record producer.");
         Artist elvisPresley = new Artist("Elvis Presley", "American rock and roll singer and actor");
-        artistDataStore.add(elvisPresley);
         Artist iceT = new Artist("Ice T", "American rapper, actor, songwriter, and producer.");
-        artistDataStore.add(iceT);
         Artist ozzyOsborne = new Artist("Ozzy Osborne", "English singer, songwriter, and television personality.");
-        artistDataStore.add(ozzyOsborne);
         Artist burningWitches = new Artist("Burning Witches", "Swiss/Dutch Heavy Metal band.");
-        artistDataStore.add(burningWitches);
         Artist duaLipa = new Artist("Dua Lipa", "English singer and song writer.");
-        artistDataStore.add(duaLipa);
         Artist arianaGrande = new Artist("Ariana Grande", "American singer and actress.");
-        artistDataStore.add(arianaGrande);
         Artist tonyAllen = new Artist("Tony Allen", "Nigerian drummer, composer, and songwriter.");
-        artistDataStore.add(tonyAllen);
         Artist nubiyanTwist = new Artist("Nubiyan Twist", "Nubiyan Twist are a twelve-piece outfit based in Leeds/London, UK.");
-        artistDataStore.add(nubiyanTwist);
 
         //setting up a new product category
         Genre hiphop = new Genre("HipHop", "HipHop", "HipHop Music by different artists.");
-        GenreDataStore.add(hiphop);
         Genre metal = new Genre("Metal", "Metal", "Metal music by different artists.");
-        GenreDataStore.add(metal);
         Genre pop = new Genre("Pop", "Pop", "Pop music by different artists.");
-        GenreDataStore.add(pop);
         Genre rockAndRoll = new Genre("Rock and Roll", "Rock and Roll", "Rock and roll music by different artists.");
-        GenreDataStore.add(rockAndRoll);
         Genre jazz = new Genre("Jazz", "Jazz", "Jazz music by different artists.");
-        GenreDataStore.add(jazz);
 
-        //setting up products and printing it
-        productDataStore.add(new Product("Elvis Presley", 9.9f, "USD", "Elvis is Back!", rockAndRoll, elvisPresley));
-        productDataStore.add(new Product("Ice T", 11.9f, "USD", "The Iceberg", hiphop, iceT));
-        productDataStore.add(new Product("Eminem", 14.9f, "USD", "The Marshall Mathers LP2", hiphop, eminem));
-        productDataStore.add(new Product("Ozzy Osborne", 9.9f, "USD", "Blizzard Of Oz", metal, ozzyOsborne));
-        productDataStore.add(new Product("Burning Witches", 14.9f, "USD", "The Witch Of The North", metal, burningWitches));
-        productDataStore.add(new Product("Dua Lipa", 9.9f, "USD", "Future Nostalgia", pop, duaLipa));
-        productDataStore.add(new Product("Ariana Grande", 11.9f, "USD", "Positions", pop, arianaGrande));
-        productDataStore.add(new Product("Tony Allen", 11.9f, "USD", "There Is No End", jazz, tonyAllen));
-        productDataStore.add(new Product("Nubiyan Twist", 13.9f, "USD", "Freedom Fables", jazz, nubiyanTwist));*/
+        //setting up products
+        Product elvisIsBack = new Product("Elvis Presley", 9.9f, "USD", "Elvis is Back!", rockAndRoll, elvisPresley);
+        Product theIceberg = new Product("Ice T", 11.9f, "USD", "The Iceberg", hiphop, iceT);
+        Product theMarshallMathersLP2 = new Product("Eminem", 14.9f, "USD", "The Marshall Mathers LP2", hiphop, eminem);
+        Product blizzardOfOz = new Product("Ozzy Osborne", 9.9f, "USD", "Blizzard Of Oz", metal, ozzyOsborne);
+        Product theWitchOfTheNorth = new Product("Burning Witches", 14.9f, "USD", "The Witch Of The North", metal, burningWitches);
+        Product futureNostalgia = new Product("Dua Lipa", 9.9f, "USD", "Future Nostalgia", pop, duaLipa);
+        Product positions = new Product("Ariana Grande", 11.9f, "USD", "Positions", pop, arianaGrande);
+        Product thereIsNoEnd = new Product("Tony Allen", 11.9f, "USD", "There Is No End", jazz, tonyAllen);
+        Product freedomFables = new Product("Nubiyan Twist", 13.9f, "USD", "Freedom Fables", jazz, nubiyanTwist);
 
+        String appConfigPath = "src/main/resources/connection.properties";
+
+        Properties appProps = new Properties();
+        try {
+            appProps.load(new FileInputStream(appConfigPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String dao = appProps.getProperty("dao");
+        if (dao.equals("jdbc")) {
+            String database = appProps.getProperty("database");
+            String user = appProps.getProperty("user");
+            String password = appProps.getProperty("password");
+            System.out.println(database + user + password);
+            DatabaseManager dbManager = setupDbManager(user, database, password);
+
+            dbManager.addArtist(eminem);
+            dbManager.addArtist(elvisPresley);
+            dbManager.addArtist(iceT);
+            dbManager.addArtist(ozzyOsborne);
+            dbManager.addArtist(burningWitches);
+            dbManager.addArtist(duaLipa);
+            dbManager.addArtist(arianaGrande);
+            dbManager.addArtist(tonyAllen);
+            dbManager.addArtist(nubiyanTwist);
+
+            dbManager.addGenre(hiphop);
+            dbManager.addGenre(pop);
+            dbManager.addGenre(metal);
+            dbManager.addGenre(rockAndRoll);
+            dbManager.addGenre(jazz);
+
+            dbManager.addProduct(elvisIsBack);
+            dbManager.addProduct(theIceberg);
+            dbManager.addProduct(theMarshallMathersLP2);
+            dbManager.addProduct(blizzardOfOz);
+            dbManager.addProduct(theWitchOfTheNorth);
+            dbManager.addProduct(futureNostalgia);
+            dbManager.addProduct(positions);
+            dbManager.addProduct(thereIsNoEnd);
+            dbManager.addProduct(freedomFables);
+
+            products = dbManager.getAllProducts();
+            artists = dbManager.getAllArtists();
+            genres = dbManager.getAllGenres();
+        }
+        else {
+            ProductDao productsDao = ProductDaoMem.getInstance();
+            GenreDao genresDao = GenreDaoMem.getInstance();
+            ArtistDao artistsDao = ArtistDaoMem.getInstance();
+
+            artistsDao.add(eminem);
+            artistsDao.add(elvisPresley);
+            artistsDao.add(iceT);
+            artistsDao.add(ozzyOsborne);
+            artistsDao.add(burningWitches);
+            artistsDao.add(duaLipa);
+            artistsDao.add(arianaGrande);
+            artistsDao.add(tonyAllen);
+            artistsDao.add(nubiyanTwist);
+
+            genresDao.add(hiphop);
+            genresDao.add(pop);
+            genresDao.add(metal);
+            genresDao.add(rockAndRoll);
+            genresDao.add(jazz);
+
+            productsDao.add(elvisIsBack);
+            productsDao.add(theIceberg);
+            productsDao.add(theMarshallMathersLP2);
+            productsDao.add(blizzardOfOz);
+            productsDao.add(theWitchOfTheNorth);
+            productsDao.add(futureNostalgia);
+            productsDao.add(positions);
+            productsDao.add(thereIsNoEnd);
+            productsDao.add(freedomFables);
+
+            products = productsDao.getAll();
+            artists = artistsDao.getAll();
+            genres = genresDao.getAll();
+        }
+
+        OrderDao orderDataStore = OrderDaoMem.getInstance();
         orderDataStore.add(new Order());
+    }
+
+    public DatabaseManager setupDbManager(String user, String dbname, String password) {
+        DatabaseManager dbManager = new DatabaseManager();
+        try {
+            dbManager.setup(user, dbname, password);
+            return dbManager;
+        } catch (SQLException | IOException ex) {
+            System.out.println("Cannot connect to database.");
+        }
+
+        return null;
     }
 }
