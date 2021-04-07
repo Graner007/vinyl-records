@@ -4,6 +4,8 @@ import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.model.Artist;
 import com.codecool.shop.model.Genre;
 import com.codecool.shop.model.Product;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -13,6 +15,7 @@ import java.util.List;
 public class ProductDaoJdbc implements ProductDao {
 
     private DataSource dataSource;
+    private static final Logger logger = LoggerFactory.getLogger(ProductDaoJdbc.class);
 
     public ProductDaoJdbc(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -34,6 +37,7 @@ public class ProductDaoJdbc implements ProductDao {
             resultSet.next();
             product.setId(resultSet.getInt(1));
         } catch (SQLException e) {
+            logger.error("Cannot add product.");
             throw new RuntimeException(e);
         }
     }
@@ -59,6 +63,7 @@ public class ProductDaoJdbc implements ProductDao {
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error("Cannot remove all products ");
             throw new RuntimeException(e);
         }
     }
@@ -86,6 +91,7 @@ public class ProductDaoJdbc implements ProductDao {
             }
             return result;
         } catch (SQLException e) {
+            logger.error("Cannot get all products");
             throw new RuntimeException("Error while reading all products", e);
         }
     }
