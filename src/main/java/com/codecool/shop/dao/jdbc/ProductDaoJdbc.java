@@ -56,11 +56,20 @@ public class ProductDaoJdbc implements ProductDao {
     @Override
     public List<Product> getAll() {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT id, name, description, defaultPrice, defaultCurrency, genre_id, artist_id FROM product";
+            String sql = "SELECT p.id, p.name, p.description, p.defaultPrice, p.defaultCurrency, p.genre_id, p.artist_id, g.id, g.name, g.description, a.id, a.name, a.description\n" +
+                    "FROM product as p\n" +
+                    "INNER JOIN genre as g ON g.id = p.id\n" +
+                    "INNER JOIN artist as a ON a.id = p.id";
             ResultSet rs = conn.createStatement().executeQuery(sql);
             List<Product> result = new ArrayList<>();
             while (rs.next()) {
-                Product product = new Product(rs.getString(2), rs.getString(3), rs.getFloat(4), Currency.getInstance(rs.getString(5)), rs.getInt(6), rs.getInt(7));
+                Genre genre = new Genre(rs.getString(9), rs.getString(10));
+                genre.setId(rs.getInt(8));
+
+                Artist artist = new Artist(rs.getString(12), rs.getString(13));
+                artist.setId(rs.getInt(11));
+
+                Product product = new Product(rs.getString(2), rs.getFloat(4), rs.getString(5), rs.getString(3), genre, artist);
 
                 product.setId(rs.getInt(1));
                 result.add(product);
