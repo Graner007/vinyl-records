@@ -1,7 +1,6 @@
 package com.codecool.shop.config;
 
 import com.codecool.shop.dao.*;
-import com.codecool.shop.dao.jdbc.DatabaseManager;
 import com.codecool.shop.dao.mem.*;
 import com.codecool.shop.model.Artist;
 import com.codecool.shop.model.Genre;
@@ -15,7 +14,6 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Properties;
 
 @WebListener
@@ -65,40 +63,7 @@ public class Initializer implements ServletContextListener {
         }
 
         String dao = appProps.getProperty("dao");
-        if (dao.equals("jdbc")) {
-            String database = appProps.getProperty("database");
-            String user = appProps.getProperty("user");
-            String password = appProps.getProperty("password");
-            System.out.println(database + user + password);
-            DatabaseManager dbManager = setupDbManager(user, database, password);
-
-            dbManager.addArtist(eminem);
-            dbManager.addArtist(elvisPresley);
-            dbManager.addArtist(iceT);
-            dbManager.addArtist(ozzyOsborne);
-            dbManager.addArtist(burningWitches);
-            dbManager.addArtist(duaLipa);
-            dbManager.addArtist(arianaGrande);
-            dbManager.addArtist(tonyAllen);
-            dbManager.addArtist(nubiyanTwist);
-
-            dbManager.addGenre(hiphop);
-            dbManager.addGenre(pop);
-            dbManager.addGenre(metal);
-            dbManager.addGenre(rockAndRoll);
-            dbManager.addGenre(jazz);
-
-            dbManager.addProduct(elvisIsBack);
-            dbManager.addProduct(theIceberg);
-            dbManager.addProduct(theMarshallMathersLP2);
-            dbManager.addProduct(blizzardOfOz);
-            dbManager.addProduct(theWitchOfTheNorth);
-            dbManager.addProduct(futureNostalgia);
-            dbManager.addProduct(positions);
-            dbManager.addProduct(thereIsNoEnd);
-            dbManager.addProduct(freedomFables);
-        }
-        else {
+        if (dao.equals("memory")) {
             ProductDao productsDao = ProductDaoMem.getInstance();
             GenreDao genresDao = GenreDaoMem.getInstance();
             ArtistDao artistsDao = ArtistDaoMem.getInstance();
@@ -134,15 +99,4 @@ public class Initializer implements ServletContextListener {
         orderDataStore.add(new Order());
     }
 
-    public DatabaseManager setupDbManager(String user, String dbname, String password) {
-        DatabaseManager dbManager = new DatabaseManager();
-        try {
-            dbManager.setup(user, dbname, password);
-            return dbManager;
-        } catch (SQLException | IOException ex) {
-            logger.error("Cannot connect to database.");
-        }
-
-        return null;
-    }
 }

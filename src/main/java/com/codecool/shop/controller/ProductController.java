@@ -1,6 +1,5 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.config.Initializer;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.service.ProductService;
 import org.thymeleaf.TemplateEngine;
@@ -16,23 +15,27 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
-
-    public static OrderDao orderDataStore = OrderDaoMem.getInstance();
-    public static LineItemDao lineItemDataStore = LineItemDaoMem.getInstance();
-    private ProductService productService = new ProductService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
+        ProductService productService = null;
+        try {
+            productService = getProductService();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
-        Order currentOrder = orderDataStore.find(orderDataStore.getAll().size());
+        Order currentOrder = productService.findOrberById(productService.getAllOrders().size());
         int orderQuantity = currentOrder.getProductNumbers();
       
         context.setVariable("genres", productService.getAllGenres());
@@ -45,7 +48,13 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JsonObject data = new Gson().fromJson(req.getReader(), JsonObject.class);
-        Order currentOrder = orderDataStore.find(orderDataStore.getAll().size());
+        ProductService productService = null;
+        try {
+            productService = getProductService();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        Order currentOrder = productService.findOrberById(productService.getAllOrders().size());
 
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
@@ -54,7 +63,7 @@ public class ProductController extends HttpServlet {
             String recordName = data.get("name").getAsString();
             System.out.println(recordName);
             float recordPrice = Float.parseFloat(data.get("price").getAsString().split(" ")[0]);
-            addLineItemToOrder(currentOrder, recordName, recordPrice);
+            productService.addLineItemToOrder(currentOrder, recordName, recordPrice);
 
             int orderQuantity = currentOrder.getProductNumbers();
 
@@ -62,70 +71,47 @@ public class ProductController extends HttpServlet {
         }
         else if (data.get("text") != null) {
             String text = data.get("text").getAsString();
-            List<String> names = getArtistsOrGenres(text);
+            List<String> names = productService.getArtistsOrGenres(text);
 
             resp.getWriter().write(new Gson().toJson(names));
         }
         else if (data.get("filter") != null) {
             String filter = data.get("filter").getAsString();
-            List<List<String>> filterdProducts = getFilteredProductsByFilter(filter);
+            List<List<String>> filterdProducts = productService.getFilteredProductsByFilter(filter);
 
             resp.getWriter().write(new Gson().toJson(filterdProducts));
         }
     }
 
-    private List<List<String>> getFilteredProductsByFilter(String filter) {
-        List<List<String>> filterdProducts = new ArrayList<>();
-        List<Product> newProducts = new ArrayList<>();
+    private ProductService getProductService() throws IOException, SQLException {
+        String appConfigPath = "src/main/resources/connection.properties";
 
-        productService.getAllProducts().forEach(product-> {
-            List<String> productList = new ArrayList<>();
-            if (product.getProductCategory().getName().equals(filter)) {
-                productList.add(product.getName());
-                productList.add(product.getProductCategory().getName());
-                productList.add(product.getPrice());
-                productList.add(product.getDescription());
-                filterdProducts.add(productList);
-                newProducts.add(product);
-            }
-            if (product.getSupplier().getName().equals(filter)) {
-                productList.add(product.getName());
-                productList.add(product.getProductCategory().getName());
-                productList.add(product.getPrice());
-                productList.add(product.getDescription());
-                filterdProducts.add(productList);
-                newProducts.add(product);
-            }
-        });
-
-        return filterdProducts;
-    }
-
-    private List<String> getArtistsOrGenres(String text) {
-        List<String> names = new ArrayList<>();
-
-        switch (text) {
-            case "genre":
-                productService.getAllGenres().forEach(genre -> names.add(genre.getName()));
-                break;
-            case "artist":
-                productService.getAllArtists().forEach(artist -> names.add(artist.getName()));
-                break;
+        Properties appProps = new Properties();
+        try {
+            appProps.load(new FileInputStream(appConfigPath));
+        } catch (IOException e) {
+            System.out.println("File Not Found");
+            e.printStackTrace();
         }
-        
-        return names;
-    }
 
-    private void addLineItemToOrder(Order currentOrder, String recordName, float recordPrice) {
-        if (lineItemDataStore.findByName(recordName) != null) {
-            LineItem existsItem = lineItemDataStore.findByName(recordName);
-            existsItem.setQuantity(existsItem.getQuantity()+1);
+        String dao = appProps.getProperty("dao");
+        if (dao.equals("jdbc")) {
+            String database = appProps.getProperty("database");
+            String user = appProps.getProperty("user");
+            String password = appProps.getProperty("password");
+
+            ProductService productService = new ProductService(database, user, password);
+            return productService;
         }
         else {
-            LineItem lineItem = new LineItem(recordName,1, recordPrice);
-            lineItemDataStore.add(lineItem);
+            ProductDao productsDao = ProductDaoMem.getInstance();
+            GenreDao genresDao = GenreDaoMem.getInstance();
+            ArtistDao artistsDao = ArtistDaoMem.getInstance();
+            OrderDao orderDao = OrderDaoMem.getInstance();
+            LineItemDao lineItemDao = LineItemDaoMem.getInstance();
 
-            currentOrder.addProduct(lineItem);
+            ProductService productService = new ProductService(productsDao, genresDao, artistsDao, orderDao, lineItemDao);
+            return productService;
         }
     }
 

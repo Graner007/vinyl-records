@@ -31,3 +31,5 @@ CREATE TABLE public.artist (
 
 ALTER TABLE ONLY public.product
     ADD CONSTRAINT fk_artist_id FOREIGN KEY (artist_id) REFERENCES public.artist(id);*/
+
+INSERT INTO artist VALUES (DEFAULT, 'Eminem', 'American singer');
