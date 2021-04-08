@@ -6,20 +6,17 @@ import com.codecool.shop.model.Artist;
 import com.codecool.shop.model.Genre;
 import com.codecool.shop.model.Order;
 import com.codecool.shop.model.Product;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.codecool.shop.service.ConfigType;
+import com.codecool.shop.service.ProductService;
+import com.codecool.shop.service.ProductServiceController;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
+import java.sql.SQLException;
 
 @WebListener
 public class Initializer implements ServletContextListener {
-
-    private static final Logger logger = LoggerFactory.getLogger(Initializer.class);
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -52,51 +49,44 @@ public class Initializer implements ServletContextListener {
         Product thereIsNoEnd = new Product("Tony Allen", 11.9f, "USD", "There Is No End", jazz, tonyAllen);
         Product freedomFables = new Product("Nubiyan Twist", 13.9f, "USD", "Freedom Fables", jazz, nubiyanTwist);
 
-        String appConfigPath = "src/main/resources/connection.properties";
-
-        Properties appProps = new Properties();
         try {
-            appProps.load(new FileInputStream(appConfigPath));
-        } catch (IOException e) {
-            logger.error("File not found");
-            e.printStackTrace();
+            ProductServiceController productServiceController = new ProductServiceController();
+            String dao = ConfigType.getDao();
+            if (dao.equals("memory")) {
+                ProductService service = productServiceController.getProductService();
+
+                service.addArtist(eminem);
+                service.addArtist(elvisPresley);
+                service.addArtist(iceT);
+                service.addArtist(ozzyOsborne);
+                service.addArtist(burningWitches);
+                service.addArtist(duaLipa);
+                service.addArtist(arianaGrande);
+                service.addArtist(tonyAllen);
+                service.addArtist(nubiyanTwist);
+
+                service.addGenre(hiphop);
+                service.addGenre(pop);
+                service.addGenre(metal);
+                service.addGenre(rockAndRoll);
+                service.addGenre(jazz);
+
+                service.addProduct(elvisIsBack);
+                service.addProduct(theIceberg);
+                service.addProduct(theMarshallMathersLP2);
+                service.addProduct(blizzardOfOz);
+                service.addProduct(theWitchOfTheNorth);
+                service.addProduct(futureNostalgia);
+                service.addProduct(positions);
+                service.addProduct(thereIsNoEnd);
+                service.addProduct(freedomFables);
+            }
+
+            OrderDao orderDataStore = OrderDaoMem.getInstance();
+            orderDataStore.add(new Order());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-
-        String dao = appProps.getProperty("dao");
-        if (dao.equals("memory")) {
-            ProductDao productsDao = ProductDaoMem.getInstance();
-            GenreDao genresDao = GenreDaoMem.getInstance();
-            ArtistDao artistsDao = ArtistDaoMem.getInstance();
-
-            artistsDao.add(eminem);
-            artistsDao.add(elvisPresley);
-            artistsDao.add(iceT);
-            artistsDao.add(ozzyOsborne);
-            artistsDao.add(burningWitches);
-            artistsDao.add(duaLipa);
-            artistsDao.add(arianaGrande);
-            artistsDao.add(tonyAllen);
-            artistsDao.add(nubiyanTwist);
-
-            genresDao.add(hiphop);
-            genresDao.add(pop);
-            genresDao.add(metal);
-            genresDao.add(rockAndRoll);
-            genresDao.add(jazz);
-
-            productsDao.add(elvisIsBack);
-            productsDao.add(theIceberg);
-            productsDao.add(theMarshallMathersLP2);
-            productsDao.add(blizzardOfOz);
-            productsDao.add(theWitchOfTheNorth);
-            productsDao.add(futureNostalgia);
-            productsDao.add(positions);
-            productsDao.add(thereIsNoEnd);
-            productsDao.add(freedomFables);
-        }
-
-        OrderDao orderDataStore = OrderDaoMem.getInstance();
-        orderDataStore.add(new Order());
     }
 
 }

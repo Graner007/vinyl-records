@@ -42,6 +42,16 @@ CREATE TABLE public.artist (
                                description text NOT NULL
 );
 
+DROP TABLE IF EXISTS public.user;
+CREATE TABLE public.user (
+                               id serial NOT NULL PRIMARY KEY,
+                               name text NOT NULL,
+                               email text NOT NULL,
+                               password text NOT NULL,
+                               phoneNumber text DEFAULT NULL,
+
+);
+
 INSERT INTO artist VALUES (DEFAULT, 'Eminem', 'American rapper, songwriter, and record producer.'),
                           (DEFAULT, 'Elvis Presley', 'American rock and roll singer and actor.'),
                           (DEFAULT, 'Ice T', 'American rapper, actor, songwriter, and producer.'),

@@ -2,8 +2,8 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.model.*;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.codecool.shop.service.ProductService;
+import com.codecool.shop.service.ProductServiceController;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,11 +21,13 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
 
+    private ProductService service = ProductServiceController.getProductService();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        Order currentOrder = ProductController.orderDataStore.find(ProductController.orderDataStore.getAll().size());
+        Order currentOrder = service.findOrberById(service.getAllOrders().size());
 
         List<String> dataNames = Arrays.asList("name", "email", "phone", "billingCompany", "billingAddress", "billingCity",
                 "billingState", "billingZip", "shippingAddress", "shippingCity", "shippingState", "shippingZip");
