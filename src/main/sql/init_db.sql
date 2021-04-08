@@ -49,6 +49,11 @@ CREATE TABLE public.user (
                                email text NOT NULL,
                                password text NOT NULL,
                                phoneNumber text DEFAULT NULL,
+                               billingAddress text DEFAULT NULL,
+                               billingCity text DEFAULT NULL,
+                               billingState text DEFAULT NULL,
+                               billingZip integer DEFAULT NULL,
+                               shoppingAddress text DEFAULT NULL,
 
 );
 
