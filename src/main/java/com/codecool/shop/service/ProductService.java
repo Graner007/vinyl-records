@@ -1,15 +1,9 @@
 package com.codecool.shop.service;
 
+import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.*;
-import com.codecool.shop.dao.jdbc.ArtistDaoJdbc;
-import com.codecool.shop.dao.jdbc.GenreDaoJdbc;
-import com.codecool.shop.dao.jdbc.ProductDaoJdbc;
 import com.codecool.shop.model.*;
-import org.postgresql.ds.PGSimpleDataSource;
 
-import javax.sql.DataSource;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,15 +14,10 @@ public class ProductService {
     private OrderDao orderDao;
     private LineItemDao lineItemDao;
 
-    public void setup(String user, String dbname, String password) throws SQLException, IOException {
-        DataSource dataSource = connect(user, dbname, password);
-        productDao = new ProductDaoJdbc(dataSource);
-        genreDao = new GenreDaoJdbc(dataSource);
-        artistDao = new ArtistDaoJdbc(dataSource);
-    }
-
-    public ProductService(String user, String dbname, String password) throws IOException, SQLException {
-        setup(user, dbname, password);
+    public ProductService(ProductDao productDao, GenreDao genreDao, ArtistDao artistDao) {
+        this.productDao = productDao;
+        this.genreDao = genreDao;
+        this.artistDao = artistDao;
     }
 
     public ProductService(ProductDao productDao, GenreDao genreDao, ArtistDao artistDao, OrderDao orderDao, LineItemDao lineItemDao) {
@@ -71,9 +60,15 @@ public class ProductService {
 
     public void removeGenres() { genreDao.removeALl(); }
 
+    public void removeLineItems() { lineItemDao.removeAll(); }
+
     public Order findOrberById(int id) { return orderDao.find(id); }
 
     public LineItem findLineItemByName(String name) { return lineItemDao.findByName(name); }
+
+    public void removeLineItemByObject(LineItem lineItem) { lineItemDao.removeByObject(lineItem); }
+
+    public void removeLineItemFromOrder(LineItem lineItem) { orderDao.removeLineItem(lineItem); }
 
     public List<List<String>> getFilteredProductsByFilter(String filter) {
         List<List<String>> filterdProducts = new ArrayList<>();
@@ -130,18 +125,23 @@ public class ProductService {
         }
     }
 
-    private DataSource connect(String user, String dbname, String password) throws SQLException {
-        PGSimpleDataSource dataSource = new PGSimpleDataSource();
+    public List<Float> changeProductQuantity(Order currentOrder, String name, int quantity) {
+        List<Float> result = new ArrayList<>();
 
-        dataSource.setDatabaseName(dbname);
-        dataSource.setUser(user);
-        dataSource.setPassword(password);
+        LineItem lineItem = findLineItemByName(name);
+        lineItem.setQuantity(quantity);
 
-        System.out.println("Trying to connect");
-        dataSource.getConnection().close();
-        System.out.println("Connection ok.");
+        if (quantity == 0) {
+            removeLineItemByObject(lineItem);
+            removeLineItemFromOrder(lineItem);
+        }
 
-        return dataSource;
+        float newGrandTotal = currentOrder.getGrandTotalPrice();
+
+        result.add(lineItem.getSubTotalPrice());
+        result.add(newGrandTotal);
+
+        return result;
     }
 
 }
