@@ -51,5 +51,3 @@ INSERT INTO artist VALUES (DEFAULT, 'Eminem', 'American rapper, songwriter, and 
                           (DEFAULT, 'Ariana Grande', 'American singer and actress.'),
                           (DEFAULT, 'Tony Allen', 'Nigerian drummer, composer, and songwriter.'),
                           (DEFAULT, 'Nubiyan Twist', 'Nubiyan Twist are a twelve-piece outfit based in Leeds/London, UK.');
-
-
