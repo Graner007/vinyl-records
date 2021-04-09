@@ -110,3 +110,21 @@ img {
     background: #3b86bf;
     box-shadow: 0 0 2px rgba(0, 0, 0, .2);
 }
+
+#account {
+    position: absolute;
+    top: 100px;
+    right: 300px;
+    color: white;
+}
+
+#account li {
+    display: inline;
+    margin-right: 20px;
+    list-style: none;
+    color: white;
+}
+
+#account a {
+    color: white;
+}
