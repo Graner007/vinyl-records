@@ -2,8 +2,10 @@ package com.codecool.shop.model;
 
 public class User{
 
+    private int id;
     private String name;
     private String email;
+    private String password;
     private String phoneNumber;
     private String companyName;
     private String billingAddress;
@@ -15,6 +17,7 @@ public class User{
     private String shippingState;
     private int shippingZip;
     private Payment payment;
+    private int paymentId;
 
     public User(String name, String email, String phoneNumber, String companyName, String billingAddress, String billingCity, String billingState, int billingZip, String shippingAddress, String shippingCity, String shippingState, int shippingZip) {
         this.name = name;
@@ -30,6 +33,18 @@ public class User{
         this.shippingState = shippingState;
         this.shippingZip = shippingZip;
     }
+
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
+
+    public String getPassword() { return password; }
 
     public String getName() { return name; }
 
