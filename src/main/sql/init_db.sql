@@ -49,7 +49,15 @@ CREATE TABLE public.user (
                                email text NOT NULL,
                                password text NOT NULL,
                                phoneNumber text DEFAULT NULL,
-
+                               billingAddress text DEFAULT NULL,
+                               billingCity text DEFAULT NULL,
+                               billingState text DEFAULT NULL,
+                               billingZip integer DEFAULT NULL,
+                               shippingAddress text DEFAULT NULL,
+                               shippingCity text DEFAULT NULL,
+                               shippingState text DEFAULT NULL,
+                               shippingZip integer DEFAULT NULL,
+                               payment_id integer;
 );
 
 INSERT INTO artist VALUES (DEFAULT, 'Eminem', 'American rapper, songwriter, and record producer.'),

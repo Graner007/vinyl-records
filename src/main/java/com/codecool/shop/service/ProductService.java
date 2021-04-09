@@ -13,19 +13,22 @@ public class ProductService {
     private ArtistDao artistDao;
     private OrderDao orderDao;
     private LineItemDao lineItemDao;
+    private UserDao userDao;
 
-    public ProductService(ProductDao productDao, GenreDao genreDao, ArtistDao artistDao) {
+    public ProductService(ProductDao productDao, GenreDao genreDao, ArtistDao artistDao, UserDao userDao) {
         this.productDao = productDao;
         this.genreDao = genreDao;
         this.artistDao = artistDao;
+        this.userDao = userDao;
     }
 
-    public ProductService(ProductDao productDao, GenreDao genreDao, ArtistDao artistDao, OrderDao orderDao, LineItemDao lineItemDao) {
+    public ProductService(ProductDao productDao, GenreDao genreDao, ArtistDao artistDao, OrderDao orderDao, LineItemDao lineItemDao, UserDao userDao) {
         this.productDao = productDao;
         this.genreDao = genreDao;
         this.artistDao = artistDao;
         this.orderDao = orderDao;
         this.lineItemDao = lineItemDao;
+        this.userDao = userDao;
     }
 
     public List<Product> getAllProducts() { return productDao.getAll(); }
@@ -37,6 +40,8 @@ public class ProductService {
     public List<Order> getAllOrders() { return orderDao.getAll(); }
 
     public List<LineItem> getAllLineItems() { return lineItemDao.getAll(); }
+
+    public List<User> getAllUsers() { return userDao.getAll(); }
 
     public void addProduct(Product product) {
         productDao.add(product);
@@ -51,6 +56,8 @@ public class ProductService {
     }
 
     public void addOrder(Order order) { orderDao.add(order); }
+
+    public void addUser(User user) { userDao.add(user); }
 
     public void addLineItem(LineItem lineItem) { lineItemDao.add(lineItem); }
 

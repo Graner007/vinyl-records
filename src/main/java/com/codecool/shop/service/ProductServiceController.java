@@ -4,6 +4,7 @@ import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.jdbc.ArtistDaoJdbc;
 import com.codecool.shop.dao.jdbc.GenreDaoJdbc;
 import com.codecool.shop.dao.jdbc.ProductDaoJdbc;
+import com.codecool.shop.dao.jdbc.UserDaoJdbc;
 import com.codecool.shop.dao.mem.*;
 
 import javax.sql.DataSource;
@@ -29,7 +30,7 @@ public class ProductServiceController {
             OrderDao orderDao = OrderDaoMem.getInstance();
             LineItemDao lineItemDao = LineItemDaoMem.getInstance();
 
-            this.productService = new ProductService(new ProductDaoJdbc(dataSource), new GenreDaoJdbc(dataSource), new ArtistDaoJdbc(dataSource), orderDao, lineItemDao);
+            this.productService = new ProductService(new ProductDaoJdbc(dataSource), new GenreDaoJdbc(dataSource), new ArtistDaoJdbc(dataSource), orderDao, lineItemDao, new UserDaoJdbc(dataSource));
         }
         else {
             ProductDao productsDao = ProductDaoMem.getInstance();
@@ -37,8 +38,9 @@ public class ProductServiceController {
             ArtistDao artistsDao = ArtistDaoMem.getInstance();
             OrderDao orderDao = OrderDaoMem.getInstance();
             LineItemDao lineItemDao = LineItemDaoMem.getInstance();
+            UserDao userDao = UserDaoMem.getInstance();
 
-            this.productService = new ProductService(productsDao, genresDao, artistsDao, orderDao, lineItemDao);
+            this.productService = new ProductService(productsDao, genresDao, artistsDao, orderDao, lineItemDao, userDao);
         }
     }
 

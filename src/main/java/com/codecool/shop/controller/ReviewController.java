@@ -34,7 +34,7 @@ public class ReviewController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         JsonObject data = new Gson().fromJson(req.getReader(), JsonObject.class);
         Order currentOrder = service.findOrberById(service.getAllOrders().size());
 
