@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="BM Records" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="icon" href="/static/img/vinyl.png">
+
+    <title>BM Records</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/header.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/shop.css" />
+</head>
+
+<body>
+
+<div th:replace="header-shop.html :: copy"></div>
+<br>
+<div class="container">
+    <h1>CHECKOUT</h1>
+
+    <form method="get" action="/checkout">
+        <div class="form-row">
+
+            <div class="form-group col-md-6">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" name="name" id="name" placeholder="Name" required>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="email">E-mail</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="E-mail address" required>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="phone">Phone number</label>
+                <input type="tel" class="form-control" name="phone" id="phone" placeholder="Phone number" required>
+            </div>
+        </div>
+
+        <hr>
+        <br>
+        <h3>SHIPPING ADDRESS</h3>
+
+        <div class="form-group">
+            <label for="shippingAddress">Address</label>
+            <input type="text" class="form-control" id="shippingAddress" name="shippingAddress" placeholder="1234 Main St" required>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="shippingCity">City</label>
+                <input type="text" class="form-control" id="shippingCity" name="shippingCity" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="shippingState">State</label>
+                <select id="shippingState" class="form-control" name="shippingState">
+                    <option selected>Pest megye</option>
+                    <option>Bacs-Kiskun megye</option>
+                    <option>Baranya megye</option>
+                    <option>Bekes megye</option>
+                    <option>Borsod-Abauj-Zemplen megye</option>
+                    <option>Csongrad-Csanad megye</option>
+                    <option>Fejer megye</option>
+                    <option>Gyor-Moson-Sopron megye</option>
+                    <option>Hajdu-Bihar megye</option>
+                    <option>Heves megye</option>
+                    <option>Jasz-Nagykun-Szolnok megye</option>
+                    <option>Komarom-Esztergom megye</option>
+                    <option>Nograd megye</option>
+                    <option>Somogy megye</option>
+                    <option>Szabolcs-Szatmar-Bereg megye</option>
+                    <option>Tolna megye</option>
+                    <option>Vas megye</option>
+                    <option>Veszprem megye</option>
+                    <option>Zala megye</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="shippingZip">Zip</label>
+                <input type="text" class="form-control" id="shippingZip" name="shippingZip" required>
+            </div>
+        </div>
+
+        <hr>
+        <h3>BILLING ADDRESS</h3>
+
+        <div class="form-group">
+            <div class="form-check form-switch">
+                <table>
+                    <tr>
+                        <td><input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" />&#45;&#45;</td>
+                        <td><label class="form-check-label" for="flexSwitchCheckDefault">My billing information is the same as shipping information.</label></td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="billingCompany">Company name</label>
+            <input type="text" class="form-control" name="billingCompany" id="billingCompany" placeholder="Company name" required>
+        </div>
+        <div class="form-group">
+            <label for="billingAddress">Address</label>
+            <input type="text" class="form-control" name="billingAddress" id="billingAddress" placeholder="1234 Main St" required>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="billingCity">City</label>
+                <input type="text" class="form-control" id="billingCity" name="billingCity" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="billingState">State</label>
+                <select id="billingState" class="form-control" name="billingState">
+                    <option selected>Pest megye</option>
+                    <option>Bacs-Kiskun megye</option>
+                    <option>Baranya megye</option>
+                    <option>Bekes megye</option>
+                    <option>Borsod-Abauj-Zemplen megye</option>
+                    <option>Csongrad-Csanad megye</option>
+                    <option>Fejer megye</option>
+                    <option>Gyor-Moson-Sopron megye</option>
+                    <option>Hajdu-Bihar megye</option>
+                    <option>Heves megye</option>
+                    <option>Jasz-Nagykun-Szolnok megye</option>
+                    <option>Komarom-Esztergom megye</option>
+                    <option>Nograd megye</option>
+                    <option>Somogy megye</option>
+                    <option>Szabolcs-Szatmar-Bereg megye</option>
+                    <option>Tolna megye</option>
+                    <option>Vas megye</option>
+                    <option>Veszprem megye</option>
+                    <option>Zala megye</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="billingZip">Zip</label>
+                <input type="text" class="form-control" id="billingZip" name="billingZip" required>
+            </div>
+        </div>
+
+
+        <br><br>
+
+        <button id="payment-button" class="shop-button" type="submit">Go to Payment <i class="fas fa-credit-card"></i></button>
+
+    </form>
+
+    <br>
+
+</div>
+
+<br><br>
+<br><br>
+<div th:replace="footer.html :: copy"></div>
+
+
+<br><br><br><br>
+<div th:replace="footer.html :: copy"></div>
+
+<script src="/static/js/review.js"></script>
+
+</body>
+</html>

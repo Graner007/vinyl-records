@@ -35,44 +35,63 @@
 <body>
 
 <div th:replace="header.html :: copy"></div>
-<input type="hidden" id="hidden-products-number" th:value="${orderQuantity}">
 
-<div class="sidebar">
-    <ul id="sidebarContent">
-        <li class="filters" th:each="genre : ${genres}" th:text="${genre.getName()}"></li>
-    </ul>
-</div>
-<br>
 <div class="container">
 
-    <div id="products" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
-            <div class="card">
-                <img th:attr="src='/static/img/product_' + ${prod.description} + '.png'" alt="" />
-                <div class="card-header colorize">
-                    <h4 class="card-text album-names" th:text="${prod.description}">Album title</h4>
-                    <h6 class="card-title" th:text="${prod.name}">Artist</h6>
-                    <p class="card-text" th:text="${prod.productCategory.genre}">Album genre</p>
-                </div>
-                <div class="card-body">
-                    <div class="card-text toCenter">
-                        <p class="lead" th:text="${prod.getPrice()}">Price</p>
+    <h1>SIGN UP</h1>
+
+    <div class="container">
+        <div class="row centered-form">
+            <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Create new BM Records account</h3>
                     </div>
-                    <div class="card-text toCenter">
-                        <button class="btn btn-outline-primary" th:id="${prod.name}">Add to cart</button>
+                    <div class="panel-body">
+                        <form role="form" method="post" action="registration">
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" name="first_name" id="first_name" class="form-control input-sm" placeholder="First Name">
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" name="last_name" id="last_name" class="form-control input-sm" placeholder="Last Name">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="email" name="email" id="email" class="form-control input-sm" placeholder="Email Address">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="submit" value="Register" class="btn btn-info btn-block" id="register-button">
+
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
+
+
+
+
+
 <br><br><br><br>
 <div th:replace="footer.html :: copy"></div>
-
-<script src="/static/js/addToCart.js"></script>
-<script src="/static/js/filtering.js"></script>
 </script>
 
+<script src="/static/js/registration.js"></script>
 </body>
 </html>

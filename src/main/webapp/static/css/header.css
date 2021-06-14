@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+*:focus {
+    outline: 0 !important;
+}
+
+a {
+    text-decoration: none;
+}
+
+.header {
+    background-color: #3b86bf;
+    padding-left: 40px;
+    height: 145px;
+    box-shadow: 5px 5px 5px 1px rgb(44, 30, 126);
+}
+
+img {
+    float: left;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.logo {
+    padding-left: 170px;
+    padding-top: 30px;
+    color: #eeeeee;
+    font-family: 'Anton', sans-serif;
+    font-size: 60px;
+}
+
+.logo a {
+    text-decoration: none !important;
+}
+
+#cart {
+    position: absolute;
+    top: 30px;
+    right: 120px;
+    width: 90px;
+    height: 90px;
+    border-radius: 50px;
+    margin-right: 80px;
+    background-color: #262626;
+    transition-duration: 0.4s;
+}
+
+#cart:hover {
+    background-color: #0b415d;
+}
+
+.fas {
+    color: white;
+}
+
+.navbar {
+    position: absolute;
+    top: 90px;
+    left: 260px;
+    font-size: 16px;
+    font-weight: bold;
+    color: darkblue;
+}
+
+.navbar li{
+    display: inline;
+    margin-right: 20px;
+    list-style: none;
+}
+
+.navbar button {
+    font-family: 'Lato', sans-serif;
+    font-size: 23px;
+    color: #c1c1c1;
+    background-color: #3b86bf;
+    border: none;
+    transition-duration: 0.4s;
+}
+
+.navbar button:hover {
+    color: #262626;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.products-number {
+    position: absolute;
+    top: 78px;
+    right: 210px;
+    z-index: 1;
+}
+
+#products-number {
+    font-family: 'Anton', sans-serif;
+    font-size: 20px;
+    color: #69e9e3;
+}
+
+.footer {
+    font-size: 18px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    padding: 3px;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    color: black;
+    background: #3b86bf;
+    box-shadow: 0 0 2px rgba(0, 0, 0, .2);
+}
+
+#account {
+    position: absolute;
+    top: 100px;
+    right: 300px;
+    color: white;
+}
+
+#account li {
+    display: inline;
+    margin-right: 20px;
+    list-style: none;
+    color: white;
+}
+
+#account a {
+    color: white;
+}

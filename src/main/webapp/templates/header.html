@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="copy">
+
+    <div class="header">
+        <div class="products-number"><p id="products-number">0</p></div>
+
+        <a href="/">
+            <img src="/static/img/vinyl.png" alt="Vinyl logo" width="120" height="120">
+        </a>
+        <h1 class="logo">BM RECORDS</h1>
+
+        <button id="cart"><i class="fas fa-shopping-cart fa-w-14 fa-2x"></i></button>
+
+        <!--<div id="account">
+            <ul>
+                <li><a href="/registration">REGISTRATION</a></li>
+                <li><a href="/login">LOG IN</a></li>
+            </ul>
+        </div>-->
+
+        <div class="navbar">
+            <ul>
+                <li><button id="artists">Artists</button></li>
+                <li><button id="genres">Genres</button></li>
+                <li><a href="/registration">REGISTRATION</a></li>
+                <li><a href="/login">LOG IN</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

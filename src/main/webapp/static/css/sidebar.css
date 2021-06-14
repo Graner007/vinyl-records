@@ -1,0 +1,17 @@
+.sidebar {
+    position: absolute;
+    top: 165px;
+    padding-top: 5px;
+    background-color: #3b86bf;
+    width: 180px;
+    margin-left: 10px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px 1px rgb(127, 206, 219);
+}
+
+.sidebar li {
+    list-style: none;
+    padding: 5px;
+    font-weight: bold;
+    color: #c1c1c1;
+}
